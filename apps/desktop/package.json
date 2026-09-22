@@ -1,0 +1,14 @@
+{
+  "name": "@roverit/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Application de bureau RoverIt (Workstation OS Hub) : enveloppe Tauri du frontend web, inventaire matériel, benchmark et gestion des machines locales.",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.1.0"
+  }
+}

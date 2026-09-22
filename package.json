@@ -1,12 +1,22 @@
 {
   "name": "roverit",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
+  "description": "RoverIt — Workstation OS Hub : gestion technique de matériel, reconditionnement et supervision d'infrastructures.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build -w @roverit/shared && npm run build -w @roverit/server && npm run build -w @roverit/web",
+    "typecheck": "npm run typecheck -w @roverit/shared && npm run typecheck -w @roverit/server && npm run typecheck -w @roverit/web",
+    "test": "npm run test -w @roverit/shared && npm run test -w @roverit/server",
+    "dev:web": "npm run dev -w @roverit/web",
+    "dev:server": "npm run dev -w @roverit/server",
+    "dev:desktop": "npm run dev -w @roverit/desktop",
+    "start": "npm run start -w @roverit/server"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }

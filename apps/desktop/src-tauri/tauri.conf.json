@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "RoverIt",
+  "version": "0.1.0",
+  "identifier": "com.workshopos.roverit",
+  "build": {
+    "beforeDevCommand": "npm run dev --prefix ../../apps/web",
+    "devUrl": "http://localhost:5173",
+    "beforeBuildCommand": "npm run build --prefix ../../apps/web",
+    "frontendDist": "../web/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "RoverIt — Workstation OS Hub",
+        "width": 1360,
+        "height": 860,
+        "minWidth": 1024,
+        "minHeight": 640,
+        "label": "main",
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "category": "DeveloperTool",
+    "shortDescription": "Gestion technique, reconditionnement et supervision.",
+    "longDescription": "Workstation OS Hub : inventaire, benchmark, workflow de reconditionnement et reporting.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

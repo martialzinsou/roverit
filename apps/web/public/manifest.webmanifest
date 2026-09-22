@@ -1,0 +1,14 @@
+{
+  "name": "RoverIt — Workstation OS Hub",
+  "short_name": "RoverIt",
+  "description": "Gestion technique de matériel, reconditionnement et supervision d'infrastructures.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#121212",
+  "lang": "fr",
+  "orientation": "any",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

@@ -1,0 +1,27 @@
+[package]
+name = "roverit-desktop"
+version = "0.1.0"
+description = "RoverIt — Workstation OS Hub : administration locale, contrôle matériel et supervision."
+authors = ["Martial Zinsou"]
+edition = "2021"
+
+[lib]
+name = "roverit_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-shell = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sysinfo = "0.32"
+rusqlite = { version = "0.32", features = ["bundled"] }
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
+panic = "abort"
