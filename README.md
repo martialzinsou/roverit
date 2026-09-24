@@ -4,7 +4,9 @@
 
 Application hybride de **gestion technique de matériel, reconditionnement de stations de travail et gouvernance de DSI** (nom de code : **Workstation OS Hub · DSI ITIL v4**). Intègre nativement la gestion d'atelier (diagnostic, benchmark thermique, ordres de travail, catalogue de pièces, rapports PDF) et la suite complète de gouvernance DSI ITIL (Gestion des Incidents P1..P4 & SLA, CMDB & Cartographie de dépendances, Gestion des Changements & CAB, Problèmes & KEDB, Catalogue de services informatiques).
 
+![Connexion — thème Apple iMac](docs/screenshots/01-login.png)
 ![Tableau de bord — aperçu](docs/screenshots/02-dashboard.png)
+![Supervision DSI — ITIL v4](docs/screenshots/11-itil-dashboard.png)
 
 ## Vue d'ensemble
 
@@ -51,9 +53,12 @@ RoverIt/
 │   └── server/        # API Fastify (REST + WebSocket, PDF, synchronisation)
 ├── packages/
 │   └── shared/        # Types métier partagés (Machine, WorkOrder, BenchmarkRun, …)
-└── docs/
-    └── sfd.md         # Cahier de spécifications fonctionnelles et techniques
-```
+ └── docs/
+     ├── sfd.md              # Cahier de spécifications
+     ├── itil-dsi.md         # Gouvernance DSI ITIL v4
+     ├── wiki/               # Wiki officiel (7 chapitres + schémas UML)
+     └── screenshots/        # 16 captures thème Apple iMac
+ ```
 
 ## Modules fonctionnels
 
@@ -61,6 +66,21 @@ RoverIt/
 2. **Supervision & benchmarking** — monitoring thermique/énergétique temps réel, séquenceur de stress test, score de stabilité thermique.
 3. **Workflow de reconditionnement & OT** — statuts de cycle de vie, checklists d'intervention, historique de traçabilité.
 4. **Reporting & exportation** — fiches techniques PDF, tableau de bord & KPIs.
+5. **Gouvernance DSI ITIL v4** — incidents SLA, CMDB, changements CAB, problèmes KEDB, catalogue de services.
+
+### Galerie de captures (thème Apple iMac)
+
+| # | Vue | Capture |
+|---|-----|---------|
+| 01 | Connexion | ![01](docs/screenshots/01-login.png) |
+| 02 | Tableau de bord Atelier | ![02](docs/screenshots/02-dashboard.png) |
+| 03 | Inventaire matériel | ![03](docs/screenshots/03-inventaire.png) |
+| 11 | Supervision DSI | ![11](docs/screenshots/11-itil-dashboard.png) |
+| 12 | Incidents & SLA | ![12](docs/screenshots/12-itil-incidents.png) |
+| 13 | CMDB & dépendances | ![13](docs/screenshots/13-itil-cmdb.png) |
+| 14 | Changements & CAB | ![14](docs/screenshots/14-itil-changes.png) |
+| 15 | Problèmes & KEDB | ![15](docs/screenshots/15-itil-problems-kedb.png) |
+| 16 | Catalogue DSI | ![16](docs/screenshots/16-itil-catalogue.png) |
 
 ## Démarrage rapide
 

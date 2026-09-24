@@ -1,39 +1,57 @@
-# Wiki · 05. Mode Hors-Ligne & Protocole de Synchronisation
+# Wiki · 05. Mode Hors-Ligne & Synchronisation
 
-> **Auteur : Martial Zinsou**  
-> **Projet : RoverIt — Workstation OS Hub**
+> **Auteur : Martial Zinsou**
 
 ---
 
-## 1. Philosophie Offline-First
-
-Un atelier ou un site d'intervention peut être temporairement privé de connexion Internet. RoverIt garantit une continuité opérationnelle totale hors-ligne grâce à une stratégie hybride :
+## 1. Philosophie offline-first
 
 ```mermaid
 sequenceDiagram
-    autonumber
-    actor Tech as Technicien
-    participant Web as Client Web (Outbox)
-    participant LocalDB as SQLite Locale (Desktop)
-    participant API as Serveur Central RoverIt
-
-    Note over Tech,Web: Déconnexion Réseau (Offline)
-    Tech->>Web: Crée une machine ou un ordre de travail
-    Web->>Web: Enregistrement dans localStorage (Outbox)
-    Web->>LocalDB: Écriture locale persistée (rusqlite)
-    Note over Tech,Web: Retour de la connectivité (Online)
-    Web->>API: Événement "online" → Déclenchement flushOutbox()
-    API->>API: Exécution idempotente (Upsert par UUID)
-    API-->>Web: Confirmation 200 OK
-    Web->>Web: Suppression de l'entrée dans l'Outbox
+    actor T as Technicien
+    participant W as Web (outbox)
+    participant L as SQLite desktop
+    participant A as API centrale
+    Note over T,W: Offline
+    T->>W: Crée machine / OT
+    W->>W: push outbox localStorage
+    W->>L: INSERT local_machines (synced=0)
+    Note over T,W: Online
+    W->>A: flushOutbox → POST /sync
+    A->>A: upsert idempotent (UUID)
+    A-->>W: 200
+    W->>W: drop outbox
+    W->>L: mark_synced
 ```
 
 ---
 
-## 2. Idempotence des Écritures
+## 2. Idempotence
 
-Chaque entité créée (machine, composant, intervention, incident) dispose d'un identifiant universellement unique généré côté client (`crypto.randomUUID()`). Les requêtes rejouées sur le serveur utilisent l'opération SQLite `INSERT INTO ... ON CONFLICT(id) DO UPDATE ...`, éliminant tout risque de doublon.
+UUID `crypto.randomUUID()` côté client + `INSERT ... ON CONFLICT(id) DO UPDATE` côté serveur. Rejeu sans doublon.
+
+```mermaid
+erDiagram
+    local_machines {
+        text id PK
+        text name
+        text hardware_json
+        int synced
+    }
+    outbox {
+        text id
+        text method
+        text url
+        json payload
+    }
+```
 
 ---
 
-> Document Wiki rédigé par **Martial Zinsou**.
+## 3. Cache et résilience
+
+GET mis en cache 60 s (`roverit.cache`). Si fetch échoue et hors-ligne, lecture du cache. WebSocket reconnexion automatique.
+
+---
+
+> Rédigé par **Martial Zinsou**.

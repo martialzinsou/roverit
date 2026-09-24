@@ -1,42 +1,54 @@
-# Wiki · 06. Sécurité, Authentification & Contrôle d'Accès (RBAC)
+# Wiki · 06. Sécurité, Authentification & RBAC
 
-> **Auteur : Martial Zinsou**  
-> **Projet : RoverIt — Workstation OS Hub**
-
----
-
-## 1. Modèle d'Authentification
-
-- **Tokens JWT** : Signés en HS256 avec une clé secrète configurée via la variable `ROVERIT_JWT_SECRET`. Expiration par défaut : 12 heures.
-- **Hachage des mots de passe** : Chiffrement par fonction de dérivation de clé `scrypt` avec sel aléatoire cryptographique (format `salt:hash`).
-- **En-tête de transport** : `Authorization: Bearer <token>`.
+> **Auteur : Martial Zinsou**
 
 ---
 
-## 2. Matrice des Rôles (RBAC)
+## 1. Authentification JWT
 
-| Fonctionnalité | `technicien` | `admin` | `consultant` |
+- HS256, secret `JWT_SECRET`, TTL 12h, header `Authorization: Bearer <token>`.
+- Mots de passe : `scrypt` + sel aléatoire (`salt:hash`).
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant A as API
+    C->>A: POST /auth/login {username, password}
+    A->>A: scrypt verify
+    A-->>C: JWT {userId, username, role}
+    C->>A: GET /machines + Bearer JWT
+    A->>A: verifyToken → req.user
+```
+
+---
+
+## 2. Matrice RBAC
+
+| Fonction | technicien | admin | consultant |
 | :--- | :---: | :---: | :---: |
-| Consultation tableaux de bord & rapports | ✅ | ✅ | ✅ |
-| Fiches machines & benchmarks | ✅ | ✅ | ❌ |
-| Ordres de travail & interventions | ✅ | ✅ | ❌ |
-| Déclaration & traitement des Incidents ITIL | ✅ | ✅ | ❌ |
-| Proposition de Changement (RFC) & vote CAB | ✅ | ✅ | ❌ |
-| Publication dans la base KEDB | ✅ | ✅ | ❌ |
-| Gestion des utilisateurs & suppression de machines | ❌ | ✅ | ❌ |
-| Modification du catalogue de pièces | ❌ | ✅ | ❌ |
+| Lecture dashboard/rapports | ✅ | ✅ | ✅ |
+| CRUD machines/benchmarks | ✅ | ✅ | ❌ |
+| Incidents / RFC / KEDB | ✅ | ✅ | ❌ |
+| Catalogue commande | ✅ | ✅ | ✅ |
+| Gestion users / suppression | ❌ | ✅ | ❌ |
+
+```mermaid
+flowchart LR
+    REQ["Requête"] --> AUTH{"authenticate"}
+    AUTH -->|401| ERR1["401 Unauthorized"]
+    AUTH --> ROLE{"requireRole(...)"}
+    ROLE -->|403| ERR2["403 Forbidden"]
+    ROLE --> OK["Handler"]
+```
 
 ---
 
-## 3. Piste d'Audit (`audit_events`)
+## 3. Audit
 
-Chaque action sensible (création de machine, clôture d'incident, vote CAB, changement de statut, suppression) enregistre un événement immuable comprenant :
-- L'identifiant de l'utilisateur acteur.
-- L'entité cible et son UUID.
-- L'action effectuée.
-- La charge utile sérialisée (payload JSON).
-- L'horodatage UTC ISO 8601.
+Table `audit_events` : `entity`, `entity_id`, `action`, `user_id`, `payload`, `created_at`. Tracé sur chaque écriture sensible.
+
+![Réglages](../screenshots/10-reglages.png)
 
 ---
 
-> Document Wiki rédigé par **Martial Zinsou**.
+> Rédigé par **Martial Zinsou**.

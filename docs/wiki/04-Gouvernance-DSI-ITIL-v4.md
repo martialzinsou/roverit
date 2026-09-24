@@ -1,31 +1,131 @@
 # Wiki · 04. Gouvernance DSI & Pratiques ITIL v4
 
-> **Auteur : Martial Zinsou**  
-> **Projet : RoverIt — Workstation OS Hub**
+> **Auteur : Martial Zinsou**
 
 ---
 
-## 1. Principes Directeurs ITIL v4
+## 1. Les 5 pratiques ITIL
 
-L'intégration d'ITIL v4 dans RoverIt formalise la gestion des services d'une Direction des Systèmes d'Information en 5 pratiques interconnectées :
-
-1. **Incident Management** : Prise en charge rapide des incidents selon leur niveau de priorité P1..P4 et respect contractuel des SLA.
-2. **Configuration Management (CMDB)** : Référentiel unifié des éléments de configuration (CIs) et graphe des dépendances.
-3. **Change Enablement** : Contrôle des demandes de changement (RFC), évaluation des risques et validation par le comité CAB.
-4. **Problem Management & KEDB** : Identification des causes profondes (RCA) et base de connaissances d'erreurs connues.
-5. **Service Request Management** : Catalogue d'offres DSI en libre-service avec engagements de délais.
-
----
-
-## 2. Matrice d'Escalade et SLAs
-
-| Priorité | Définition | Impact x Urgence | SLA Résolution Cible |
-| :---: | :--- | :---: | :---: |
-| **P1** | Incident critique — Interruption de service vital | Critique x Critique | **2 heures** |
-| **P2** | Incident majeur — Dégradation sévère | Élevé x Haute | **8 heures** |
-| **P3** | Incident moyen — Gêne partielle | Moyen x Moyenne | **24 heures** |
-| **P4** | Incident mineur — Demande ou anomalie légère | Faible x Faible | **72 heures** |
+```mermaid
+flowchart TD
+    U["Usagers"] --> INC["Incidents P1..P4<br/>SLA"]
+    U --> CAT["Catalogue DSI<br/>demandes"]
+    INC --> CMDB["CMDB / CIs<br/>dépendances"]
+    INC --> PRB["Problèmes<br/>RCA"]
+    PRB --> KEDB["KEDB<br/>erreurs connues"]
+    PRB --> RFC["Changements RFC<br/>CAB + rollback"]
+    RFC --> CMDB
+    CAT --> CMDB
+```
 
 ---
 
-> Document Wiki rédigé par **Martial Zinsou**.
+## 2. Incidents — Matrice Impact × Urgence
+
+| Impact \ Urgence | Critique | Haute | Moyenne | Faible |
+| :--- | :---: | :---: | :---: | :---: |
+| **Critique** | P1 | P1 | P2 | P2 |
+| **Élevé** | P1 | P2 | P2 | P3 |
+| **Moyen** | P2 | P2 | P3 | P4 |
+| **Faible** | P2 | P3 | P4 | P4 |
+
+SLA : P1 **2h**, P2 **8h**, P3 **24h**, P4 **72h**.
+
+```mermaid
+stateDiagram-v2
+    [*] --> nouveau
+    nouveau --> qualifie
+    qualifie --> en_cours
+    en_cours --> en_attente
+    en_attente --> en_cours
+    en_cours --> resolu
+    resolu --> clos
+    clos --> [*]
+```
+
+Captures DSI :
+
+| Vue | Fichier |
+| :--- | :--- |
+| Supervision DSI | ![DSI](../screenshots/11-itil-dashboard.png) |
+| Incidents & SLA | ![Incidents](../screenshots/12-itil-incidents.png) |
+
+---
+
+## 3. CMDB — Modèle et dépendances
+
+```mermaid
+erDiagram
+    configuration_items ||--o{ ci_relations : source
+    configuration_items ||--o{ ci_relations : cible
+    configuration_items ||--o{ incidents : impacté
+    configuration_items {
+        text id PK
+        text type
+        text status
+        text criticality
+        text ip_address
+    }
+    ci_relations {
+        text id PK
+        text relation_type
+    }
+```
+
+Types de relation : `depend_de`, `heberge`, `connecte_a`, `utilise_par`, `redondance_de`.
+
+![CMDB](../screenshots/13-itil-cmdb.png)
+
+---
+
+## 4. Changements — Workflow CAB
+
+```mermaid
+sequenceDiagram
+    actor D as Demandeur
+    participant API as API
+    actor CAB as Comité CAB
+    D->>API: POST /itil/changes (RFC)
+    API->>CAB: Notification
+    CAB->>API: POST /itil/changes/:id/cab-vote
+    API->>API: Agrège votes
+    alt Approuvé
+        D->>API: PATCH status=approuve → déploiement
+    else Rejeté
+        API-->>D: Rejet motivé
+    end
+```
+
+Niveaux : `standard` (pré-approuvé), `normal` (CAB), `urgent` (ECAB). Risque : `faible`→`critique`. Rollback plan obligatoire.
+
+![Changements](../screenshots/14-itil-changes.png)
+
+---
+
+## 5. Problèmes & KEDB — RCA
+
+```mermaid
+flowchart LR
+    INC1["Incidents récurrents"] --> PRB["Problème<br/>analyse 5 pourquoi"]
+    PRB --> RC["Cause racine"]
+    RC --> WA["Workaround"]
+    RC --> FIX["Correctif définitif"]
+    WA --> KEDB2["Article KEDB"]
+    FIX --> RFC2["RFC correctif"]
+```
+
+Chaque article KEDB documente : symptômes, cause racine, workaround, fix, compteur `views_count`.
+
+![Problèmes & KEDB](../screenshots/15-itil-problems-kedb.png)
+
+---
+
+## 6. Catalogue de services
+
+Prestations : station 3D, PC nomade, compte ERP, VPN MFA, upgrade RAM, diagnostic atelier. Délai estimé + prix + SLA livraison. Workflow : `soumise` → `approuvee` → `en_traitement` → `livree`.
+
+![Catalogue](../screenshots/16-itil-catalogue.png)
+
+---
+
+> Rédigé par **Martial Zinsou**.

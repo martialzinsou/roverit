@@ -1,51 +1,57 @@
 # Wiki · 07. Guide de Déploiement & Exploitation
 
-> **Auteur : Martial Zinsou**  
-> **Projet : RoverIt — Workstation OS Hub**
+> **Auteur : Martial Zinsou**
 
 ---
 
-## 1. Prérequis Système
+## 1. Prérequis
 
-- **Node.js** : version 20.x ou 22.x LTS.
-- **npm** : version 10+.
-- **Rust & Cargo** : version 1.75+ (uniquement pour compiler l'application de bureau Tauri).
-- **SQLite3** : intégré nativement via `better-sqlite3` et `rusqlite`.
+- Node 20/22 LTS, npm 10+
+- Rust 1.75+ (desktop Tauri)
+- SQLite (bundled)
 
----
-
-## 2. Variables d'Environnement
+## 2. Variables d'environnement
 
 | Variable | Défaut | Description |
 | :--- | :--- | :--- |
-| `PORT` | `3001` | Port d'écoute du serveur Fastify |
-| `HOST` | `0.0.0.0` | Adresse IP d'écoute réseau |
-| `ROVERIT_DB_PATH` | `./data/roverit.db` | Chemin du fichier de base de données SQLite |
-| `ROVERIT_JWT_SECRET` | *(généré par défaut)* | Clé secrète de signature des jetons de session |
-| `ROVERIT_TOKEN_TTL` | `12h` | Durée de validité des sessions |
-| `ROVERIT_NO_WS` | *(vide)* | Si défini à `1`, désactive la passerelle WebSocket |
+| `PORT` | 3001 | Port Fastify |
+| `HOST` | 0.0.0.0 | Bind |
+| `DB_PATH` | ./data/roverit.db | Fichier SQLite |
+| `JWT_SECRET` | dev-secret | Signature JWT |
+| `TOKEN_TTL` | 12h | TTL session |
+| `PUBLIC_DIR` | ../web/dist | Frontend servi |
 
----
-
-## 3. Commandes d'Exploitation
+## 3. Commandes
 
 ```bash
-# 1. Installation des dépendances
 npm install
-
-# 2. Vérification statique des types
 npm run typecheck
-
-# 3. Lancement des tests unitaires et d'intégration (14/14 tests)
-npm test
-
-# 4. Compilation de production de l'ensemble des packages
+npm test          # 14/14
 npm run build
-
-# 5. Démarrage du serveur en production
-npm start
+npm start         # prod
 ```
 
 ---
 
-> Document Wiki rédigé par **Martial Zinsou**.
+## 4. Déploiement — Schéma
+
+```mermaid
+flowchart TB
+    GH["GitHub roverit"] --> CI["CI build"]
+    CI --> SRV["Serveur prod<br/>Fastify + roverit.db"]
+    CI --> WEB["Artefact web/dist"]
+    SRV --> NGINX["Caddy/Nginx TLS 1.3"]
+    NGINX --> USERS["Utilisateurs"]
+```
+
+---
+
+## 5. Rapports & exploitation
+
+![Rapports](../screenshots/09-rapports.png)
+
+Export PDF via `pdfkit` : fiche machine certifiée (composants, benchmarks, OT).
+
+---
+
+> Rédigé par **Martial Zinsou**.

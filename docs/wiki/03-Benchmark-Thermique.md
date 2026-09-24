@@ -1,33 +1,76 @@
 # Wiki · 03. Benchmark & Supervision Thermique
 
-> **Auteur : Martial Zinsou**  
-> **Projet : RoverIt — Workstation OS Hub**
+> **Auteur : Martial Zinsou**
 
 ---
 
-## 1. Moteur de Test & Métriques
+## 1. Types d'épreuve
 
-Le module de benchmark assure la qualification thermique et la détection précoce du *thermal throttling* (étranglement thermique) :
+| Kind | Objectif | Durée |
+| :--- | :--- | :--- |
+| `stability` | Charge CPU+GPU combinée | 600 s |
+| `cpu` | Stress multi-cœurs | 300 s |
+| `gpu` | Shaders / VRAM | 300 s |
+| `memory` | Intégrité RAM | 300 s |
+| `thermal` | Courbe montée/dissipation | 600 s |
 
-- **Types d'épreuves** :
-  - `stability` : Charge combinée CPU + GPU simulant un rendu 3D prolongé.
-  - `cpu` : Calcul intensif d'éléments finis et stress multi-cœurs.
-  - `gpu` : Test de mémoire vidéo et rendu shaders OpenGL/DirectX.
-  - `memory` : Test d'intégrité de la RAM (recherche d'erreurs mémoire ECC/non-ECC).
-  - `thermal` : Courbe de montée en température et vitesse de dissipation après coupure de charge.
-
----
-
-## 2. Détection Matérielle Native (Rust)
-
-Sur l'application de bureau Tauri, le backend Rust interroge le système d'exploitation via la bibliothèque `sysinfo` :
-- Fréquence actuelle par cœur (MHz).
-- Températures capteurs CPU / GPU (°C).
-- Taux d'utilisation processeur et mémoire vive en temps réel.
-- Cycles et santé de la batterie (pour les stations de travail nomades).
-
-Le score de stabilité est normalisé sur une échelle de 0 à 100 : un score supérieur ou égal à 85 valide la station pour son déploiement.
+![Benchmark](../screenshots/06-benchmark.png)
 
 ---
 
-> Document Wiki rédigé par **Martial Zinsou**.
+## 2. Score de stabilité
+
+Normalisé 0–100. Seuil de validation : **≥ 85** → passage en `pret_deploiement`. En dessous, repaste thermique recommandé.
+
+```mermaid
+flowchart LR
+    START["Lancer run"] --> LOAD["Charge CPU/GPU"]
+    LOAD --> SAMPLE["Échantillon temp / CPU%"]
+    SAMPLE --> SCORE["score = f(temp_max, throttling, erreurs)"]
+    SCORE --> DECIDE{"score ≥ 85 ?"}
+    DECIDE -->|oui| OK["Prêt déploiement"]
+    DECIDE -->|non| RETRY["Repaste + retest"]
+```
+
+---
+
+## 3. Télémétrie native (Tauri Rust)
+
+`sysinfo 0.32` expose via commandes Tauri :
+
+- `hardware_profile` → CPU, RAM, disques, batterie
+- `live_stats` → `cpu_pct`, `mem_used`, `cpu_temp_c`, `freq_mhz`
+- `run_stress_test(duration)` → boucle CPU bound + mesures
+
+```mermaid
+sequenceDiagram
+    participant W as WebView
+    participant R as Rust commands.rs
+    participant OS as sysinfo
+    W->>R: invoke live_stats
+    R->>OS: System::new_all + refresh
+    OS-->>R: cpu, mem, temp
+    R-->>W: LiveStats JSON
+```
+
+---
+
+## 4. Modèle de données
+
+```mermaid
+erDiagram
+    benchmark_runs {
+        text id PK
+        text machine_id FK
+        text kind
+        real score
+        real avg_temp_c
+        real max_temp_c
+        int duration_s
+    }
+    machines ||--o{ benchmark_runs : mesurée_par
+```
+
+---
+
+> Rédigé par **Martial Zinsou**.
