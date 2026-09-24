@@ -1,5 +1,7 @@
 # RoverIt — Référence API REST/WebSocket
 
+> **Auteur : Martial Zinsou**
+
 Base de l'API : **`/api/v1`** — serveur : **`http://localhost:3001`** (défaut).
 
 Sauf mention contraire, toute route est protégée par un **JWT Bearer** :
@@ -108,7 +110,39 @@ Connexion : `ws://localhost:3001/ws` (même origine en production).
 
 Chaque message est enveloppé : `{ event, payload, ts }`. L'application peut aussi envoyer `{ event: "ping" }` et reçoit `pong`.
 
-## 10. Codes d'erreur
+## 10. Gouvernance DSI & Endpoints ITIL v4
+
+| Méthode | Route | Rôle requis | Description |
+| --- | --- | --- | --- |
+| `GET` | `/itil/dashboard` | tout | KPIs DSI : SLA compliance rate, MTTR, CIs, incidents P1/P2. |
+| `GET` | `/itil/cmdb/cis` | tout | Liste des Éléments de Configuration (filtrable type, criticité). |
+| `POST` | `/itil/cmdb/cis` | tech, admin | Création d'un CI (nom, type, modèle, IP, site, criticité). |
+| `GET` | `/itil/cmdb/cis/:id` | tout | Détail d'un CI avec relations entrantes/sortantes et incidents. |
+| `PATCH` | `/itil/cmdb/cis/:id` | tech, admin | Mise à jour des attributs d'un CI. |
+| `DELETE` | `/itil/cmdb/cis/:id` | admin | Suppression d'un CI. |
+| `GET` | `/itil/cmdb/relations` | tout | Cartographie complète des dépendances entre CIs. |
+| `POST` | `/itil/cmdb/relations` | tech, admin | Déclaration d'un lien (dépend_de, héberge, connecté_à). |
+| `GET` | `/itil/incidents` | tout | Liste des incidents (triés par priorité P1..P4). |
+| `POST` | `/itil/incidents` | tout | Déclaration d'incident (calcul auto priorité et SLA). |
+| `GET` | `/itil/incidents/:id` | tout | Détail d'un incident avec timeline complète. |
+| `PATCH` | `/itil/incidents/:id` | tech, admin | Mise à jour statut, workaround, résolution (détection SLA breach). |
+| `POST` | `/itil/incidents/:id/timeline` | tout | Ajout d'une note ou commentaire sur la timeline. |
+| `GET` | `/itil/changes` | tout | Liste des demandes de changement (RFC). |
+| `POST` | `/itil/changes` | tech, admin | Création d'une RFC (catégorie, risque, rollback plan). |
+| `GET` | `/itil/changes/:id` | tout | Détail d'une RFC avec votes du comité CAB. |
+| `PATCH` | `/itil/changes/:id` | tech, admin | Mise à jour du statut RFC et calendrier de maintenance. |
+| `POST` | `/itil/changes/:id/cab-vote` | tech, admin | Vote d'approbation CAB (pour, contre, abstention). |
+| `GET` | `/itil/problems` | tout | Liste des problèmes et causes racines (RCA). |
+| `POST` | `/itil/problems` | tech, admin | Déclaration d'un problème avec workaround et solution. |
+| `GET` | `/itil/kedb` | tout | Moteur de recherche de la base d'erreurs connues (KEDB). |
+| `POST` | `/itil/kedb` | tech, admin | Publication d'un article KEDB (symptômes, cause, workaround). |
+| `GET` | `/itil/services/catalog` | tout | Catalogue des prestations et offres de service DSI. |
+| `POST` | `/itil/services/catalog` | admin | Ajout d'une prestation au catalogue. |
+| `GET` | `/itil/services/requests` | tout | Liste des commandes et demandes usagers. |
+| `POST` | `/itil/services/requests` | tout | Soumission d'une demande avec bénéficiaire et urgence. |
+| `PATCH` | `/itil/services/requests/:id` | tech, admin | Validation, prise en charge et livraison d'une demande. |
+
+## 11. Codes d'erreur
 
 | Code | Sens |
 | --- | --- |
@@ -119,3 +153,7 @@ Chaque message est enveloppé : `{ event, payload, ts }`. L'application peut aus
 | `503` | Mode hors-ligne (côté frontend). |
 
 Exemple de réponse d'erreur : `{ "error": "Authentification requise" }`
+
+---
+
+> Spécification API conçue et documentée par **Martial Zinsou**.

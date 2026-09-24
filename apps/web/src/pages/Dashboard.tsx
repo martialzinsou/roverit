@@ -1,6 +1,8 @@
 /**
- * Tableau de bord : KPIs de supervision, répartition du parc, priorités des
+ * Tableau de bord : Thème Apple iMac (https://www.apple.com/fr/imac/)
+ * KPIs de supervision, répartition du parc aux 7 couleurs iMac, priorités des
  * OT et listes des dernières machines et interventions.
+ * Auteur : Martial Zinsou
  */
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
@@ -27,13 +29,13 @@ import { useDashboardKpis, useMachines, useWorkOrders } from '../lib/hooks';
 import { canEdit, useAuth } from '../lib/auth';
 import { Card, Spinner, StatTile } from '../components/ui';
 
-/** Couleurs de camembert associées à chaque statut de cycle de vie. */
+/** Couleurs inspirées de la palette iMac pour les statuts du parc. */
 const PIE_COLORS: Record<string, string> = {
-  en_attente_diagnostic: '#f59e0b',
-  en_cours_upgrade: '#0ea5e9',
-  en_test_thermique: '#fbbf24',
-  pret_deploiement: '#34d399',
-  archive: '#6d6d6d',
+  en_attente_diagnostic: '#f97316', // Orange iMac
+  en_cours_upgrade: '#0071e3',      // Bleu iMac
+  en_test_thermique: '#eab308',     // Jaune iMac
+  pret_deploiement: '#10b981',      // Vert iMac
+  archive: '#86868b',              // Argent / Gris iMac
 };
 
 /** Vue d'ensemble du parc : stats, graphiques et listes récentes. */
@@ -72,10 +74,15 @@ export default function Dashboard() {
   const k = kpis.data;
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div>
-          <h1 className="text-2xl font-bold text-ink-100">Tableau de bord</h1>
-          <p className="text-sm text-ink-400">Supervision du parc et KPIs de reconditionnement.</p>
+          <h1 className="text-3xl font-extrabold tracking-tight text-white">
+            Tableau de bord. <span className="imac-gradient-text">Vue d'ensemble.</span>
+          </h1>
+          <p className="mt-1 text-sm text-ink-400">
+            Supervision du parc de stations, benchmarks thermiques et KPIs de reconditionnement.
+          </p>
+          <div className="mt-1 text-xs text-brand-400 font-medium">Auteur : Martial Zinsou</div>
         </div>
         {canEdit(user?.role) ? (
           <Link to="/machines" className="btn-primary">

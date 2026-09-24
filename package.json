@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "RoverIt — Workstation OS Hub : gestion technique de matériel, reconditionnement et supervision d'infrastructures.",
+  "author": "Martial Zinsou",
   "workspaces": [
     "apps/*",
     "packages/*"

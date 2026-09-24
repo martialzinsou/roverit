@@ -2,6 +2,7 @@
 //! Rassemble la collecte de l'état matériel (CPU, RAM, disques, batterie),
 //! le test de stress et la gestion locale des machines.
 //! Toute logique est déléguée au store SQLite local pour la persistance.
+//! Auteur : Martial Zinsou.
 
 use serde::{Deserialize, Serialize};
 use std::sync::atomic::{AtomicBool, Ordering};

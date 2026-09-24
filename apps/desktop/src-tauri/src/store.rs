@@ -1,6 +1,7 @@
 //! Couche de persistance SQLite locale de RoverIt.
 //! Stocke les machines (et à terme les bons de travail) collectées sur la machine hôte,
 //! en attendant leur synchronisation avec le backend distant.
+//! Auteur : Martial Zinsou.
 
 use rusqlite::{params, Connection};
 use serde::{Deserialize, Serialize};

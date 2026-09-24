@@ -1,7 +1,8 @@
 /**
  * Composant racine de l'application web.
  * Déclare le routeur (React Router) avec les gardes d'authentification et
- * d'accès admin, enveloppant chaque page dans le layout principal.
+ * d'accès admin, enveloppant chaque page dans le layout principal (Atelier & DSI ITIL).
+ * Auteur : Martial Zinsou
  */
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './lib/auth';
@@ -16,6 +17,12 @@ import WorkOrders from './pages/WorkOrders';
 import WorkOrderDetail from './pages/WorkOrderDetail';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
+import ItilDashboard from './pages/itil/ItilDashboard';
+import ItilIncidents from './pages/itil/ItilIncidents';
+import ItilCmdb from './pages/itil/ItilCmdb';
+import ItilChanges from './pages/itil/ItilChanges';
+import ItilProblems from './pages/itil/ItilProblems';
+import ItilServiceCatalog from './pages/itil/ItilServiceCatalog';
 
 /** Garde de route : redirige vers /login si aucun utilisateur n'est connecté. */
 function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -127,6 +134,66 @@ export default function App() {
                   <Settings />
                 </Layout>
               </AdminOnly>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/itil"
+          element={
+            <RequireAuth>
+              <Layout>
+                <ItilDashboard />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/itil/incidents"
+          element={
+            <RequireAuth>
+              <Layout>
+                <ItilIncidents />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/itil/cmdb"
+          element={
+            <RequireAuth>
+              <Layout>
+                <ItilCmdb />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/itil/changes"
+          element={
+            <RequireAuth>
+              <Layout>
+                <ItilChanges />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/itil/problems"
+          element={
+            <RequireAuth>
+              <Layout>
+                <ItilProblems />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/itil/services"
+          element={
+            <RequireAuth>
+              <Layout>
+                <ItilServiceCatalog />
+              </Layout>
             </RequireAuth>
           }
         />

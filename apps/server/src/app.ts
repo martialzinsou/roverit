@@ -15,10 +15,12 @@ import { workOrderRoutes } from './routes/workorders.js';
 import { reportRoutes } from './routes/reports.js';
 import { dashboardRoutes } from './routes/dashboard.js';
 import { syncRoutes } from './routes/sync.js';
+import { itilRoutes } from './routes/itil.js';
 
 /**
  * Options de construction de l'application : emplacement de la base SQLite,
  * répertoire du frontend à servir et configuration du logger Fastify.
+ * Auteur : Martial Zinsou
  */
 export interface BuildOptions {
   dbPath?: string;
@@ -48,6 +50,7 @@ export async function buildApp(
   await app.register(reportRoutes(db), { prefix: '/api/v1' });
   await app.register(dashboardRoutes(db), { prefix: '/api/v1' });
   await app.register(syncRoutes(db), { prefix: '/api/v1' });
+  await app.register(itilRoutes(db), { prefix: '/api/v1' });
 
   app.get('/health', async () => ({
     ok: true,

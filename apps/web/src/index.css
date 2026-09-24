@@ -1,7 +1,8 @@
 /**
- * Feuille de styles globale : directives Tailwind, structure pleine hauteur,
- * scrollbars personnalisées et classes de composants réutilisables
- * (.card, .btn, .input, .th/.td…).
+ * Feuille de styles globale : Thème Apple iMac (https://www.apple.com/fr/imac/)
+ * Directives Tailwind, fond noir profond avec halos colorés subtils (iMac 7 couleurs),
+ * surfaces glassmorphism (verre dépoli), boutons pill et typographie épurée San Francisco.
+ * Auteur : Martial Zinsou
  */
 @tailwind base;
 @tailwind components;
@@ -14,47 +15,79 @@ body,
 }
 
 body {
-  @apply bg-ink-950 text-ink-100 antialiased;
+  @apply bg-black text-ink-100 antialiased selection:bg-brand-500/30 selection:text-white;
+  background-color: #000000;
+  /* Arrière-plan subtilement texturé avec halos lumineux inspirés des 7 couleurs de l'iMac */
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(0, 113, 227, 0.08), transparent 35%),
+    radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.06), transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(244, 63, 94, 0.05), transparent 45%),
+    radial-gradient(circle at 90% 85%, rgba(16, 185, 129, 0.05), transparent 35%);
+  background-attachment: fixed;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: -0.015em;
 }
 
+/* Scrollbars discrètes style macOS */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #1c1c1c;
+  background: rgba(0, 0, 0, 0.2);
 }
 ::-webkit-scrollbar-thumb {
-  background: #4f4f4f;
-  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #6d6d6d;
+  background: rgba(255, 255, 255, 0.28);
 }
 
 @layer components {
+  /* Carte Apple avec verre dépoli (Glassmorphism) */
   .card {
-    @apply rounded-xl border border-ink-800 bg-ink-900 p-4 shadow-sm;
+    @apply rounded-2xl border border-white/[0.08] bg-[#161618]/75 backdrop-blur-2xl p-5 shadow-apple-card transition-all duration-300;
   }
+  .card:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  /* Champs de saisie Apple */
   .input {
-    @apply w-full rounded-lg border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-ink-100 placeholder-ink-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500;
+    @apply w-full rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 py-2.5 text-sm text-white placeholder-ink-400 backdrop-blur-md transition-all duration-200 focus:border-[#2997ff] focus:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-[#2997ff]/25;
   }
+
+  /* Boutons Pill Apple */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
   }
   .btn-primary {
-    @apply btn bg-brand-600 text-ink-950 hover:bg-brand-500;
+    @apply btn bg-[#0071e3] text-white hover:bg-[#0077ed] shadow-sm hover:shadow-[0_0_20px_rgba(0,113,227,0.4)];
   }
   .btn-secondary {
-    @apply btn border border-ink-700 bg-ink-800 text-ink-100 hover:bg-ink-700;
+    @apply btn border border-white/[0.12] bg-white/[0.08] text-ink-100 hover:bg-white/[0.14] hover:text-white backdrop-blur-md;
   }
   .btn-danger {
-    @apply btn bg-red-900 text-red-100 hover:bg-red-800;
+    @apply btn bg-[#ff3b30]/90 text-white hover:bg-[#ff3b30] shadow-sm hover:shadow-[0_0_15px_rgba(255,59,48,0.4)];
   }
+
   .th {
-    @apply px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider text-ink-400;
+    @apply px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-ink-400 border-b border-white/[0.06];
   }
   .td {
-    @apply px-3 py-2 text-sm text-ink-200;
+    @apply px-4 py-3 text-sm text-ink-200 border-b border-white/[0.04];
+  }
+
+  /* Titre héroïque style Apple (grand, serré, punchy) */
+  .apple-title {
+    @apply text-3xl font-extrabold tracking-tight text-white md:text-4xl;
+  }
+
+  /* Gradient de texte style Apple Intelligence */
+  .imac-gradient-text {
+    @apply bg-gradient-to-r from-[#2997ff] via-[#a855f7] to-[#f43f5e] bg-clip-text text-transparent;
   }
 }

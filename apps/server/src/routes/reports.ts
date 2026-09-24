@@ -1,3 +1,8 @@
+/**
+ * Routes de génération de rapports et fiches techniques PDF :
+ * export certifié de fiche machine avec benchmarks et composants via pdfkit.
+ * Auteur : Martial Zinsou
+ */
 import type { FastifyInstance } from 'fastify';
 import type Database from 'better-sqlite3';
 import PDFDocument from 'pdfkit';

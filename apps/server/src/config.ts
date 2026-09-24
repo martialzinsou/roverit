@@ -1,12 +1,12 @@
+/**
+ * Configuration centrale du serveur RoverIt : ports, chemins, JWT et TTL.
+ * Auteur : Martial Zinsou
+ */
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-/**
- * Configuration centrale du serveur, chargée depuis les variables
- * d'environnement (avec valeurs par défaut pour le développement local).
- */
 export const config = {
   port: Number(process.env.PORT ?? 3001),
   host: process.env.HOST ?? '0.0.0.0',

@@ -1,6 +1,7 @@
 # RoverIt — Cahier de spécifications fonctionnelles et techniques (SFD)
 
-> Nom de code : **Workstation OS Hub**
+> **Auteur : Martial Zinsou**  
+> Nom de code : **Workstation OS Hub**  
 > Version : 0.1.0 — Document de référence des exigences de l'application RoverIt.
 
 ---
@@ -83,7 +84,19 @@ L'authentification repose sur **JWT (HS256)** ; chaque requête d'écriture vér
 
 Fournies au démarrage si le serveur est vide : 3 utilisateurs (`admin/admin`, `tech/tech`, `client/client`), 4 stations de travail (Alpha WS-01 → Delta WS-04) dans des états de cycle de vie variés, composants, 8 pièces au catalogue, 5 runs de benchmark et 4 ordres de travail avec interventions et checklist.
 
-## 8. Hors périmètre (v0.1)
+## 8. Gouvernance DSI & Suite ITIL v4 (v0.2)
+- Gestion des Incidents opérationnels P1 à P4 avec engagement SLA de résolution.
+- Base CMDB des Éléments de Configuration (CIs) et matrice de dépendances d'infrastructure.
+- Gestion des Changements (RFC), analyse de risques, comités CAB et plans de rollback.
+- Gestion des Problèmes avec analyse de cause racine (RCA) et base de connaissances d'erreurs connues (KEDB).
+- Catalogue de services DSI et guichet de demandes usagers.
+- Documentation complète disponible dans le [Wiki Officiel](wiki/Home.md) et le [Guide DSI ITIL](itil-dsi.md).
+
+## 9. Hors périmètre (v0.2)
 - Multi-tenant / organisation (client renseigné en attribut simple).
 - Supervision à distance multi-sites (WS temps réel extensible via `/ws`).
 - Migration automatique vers PostgreSQL en production (schéma déjà compatible).
+
+---
+
+> Document conçu et rédigé par **Martial Zinsou**, Auteur et Architecte du projet RoverIt.

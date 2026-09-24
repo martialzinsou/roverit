@@ -1,3 +1,8 @@
+/**
+ * Routes de gestion de l'inventaire matériel et du cycle de vie des machines :
+ * CRUD, ajout/suppression de composants et fiches détaillées.
+ * Auteur : Martial Zinsou
+ */
 import type { FastifyInstance } from 'fastify';
 import type Database from 'better-sqlite3';
 import {

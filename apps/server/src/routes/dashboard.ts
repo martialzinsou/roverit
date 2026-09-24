@@ -1,12 +1,13 @@
+/**
+ * Routes du tableau de bord : calcule et renvoie les KPIs globaux
+ * (parc machines, OT ouverts, score de stabilité, interventions 30j...).
+ * Auteur : Martial Zinsou
+ */
 import type { FastifyInstance } from 'fastify';
 import type Database from 'better-sqlite3';
 import { daysAgoIso, LIFECYCLE_STATUSES, type DashboardKpis } from '@roverit/shared';
 import { authenticate } from '../lib/auth.js';
 
-/**
- * Routes du tableau de bord : calcule et renvoie les KPIs globaux
- * (parc machines, OT ouverts, score de stabilité, interventions 30j...).
- */
 export function dashboardRoutes(db: Database.Database) {
   return async function (app: FastifyInstance): Promise<void> {
     app.get('/dashboard/kpis', { preHandler: authenticate }, async () => {

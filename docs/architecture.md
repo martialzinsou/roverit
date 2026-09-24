@@ -1,5 +1,7 @@
 # RoverIt — Architecture technique & diagrammes UML
 
+> **Auteur : Martial Zinsou**
+
 Ce document décrit l'architecture de l'application **RoverIt (Workstation OS Hub)** et ses principaux flux, illustrés par des **diagrammes UML (Mermaid)** rendus directement sur GitHub.
 
 ## 1. Vue d'ensemble des briques
@@ -13,7 +15,7 @@ flowchart LR
     end
 
     subgraph Server["apps/server — Fastify (Node.js / TypeScript)"]
-        API["REST /api/v1<br/>auth · machines · parts<br/>benchmarks · work-orders<br/>reports · dashboard · sync"]
+        API["REST /api/v1<br/>auth · machines · parts<br/>benchmarks · work-orders<br/>reports · dashboard · sync · itil"]
         WS["WebSocket /ws<br/>événements temps réel"]
         PDF["Génération PDF<br/>fiche technique (pdfkit)"]
         SQL["SQLite serveur<br/>roverit.db"]
@@ -222,7 +224,12 @@ flowchart LR
 
 ## 9. Liens
 
+- [Gouvernance DSI & ITIL v4](./itil-dsi.md)
 - [Cahier des charges (SFD)](./sfd.md)
 - [Modèle de données](./data-model.md)
 - [Référence API](./api.md)
 - [Guide d'utilisation illustré](./usage-guide.md)
+
+---
+
+> Conçu et architecturé par **Martial Zinsou**.

@@ -1,3 +1,8 @@
+/**
+ * Routes d'authentification et gestion des sessions utilisateurs :
+ * connexion (POST /auth/login), profil courant (GET /auth/me) et RBAC.
+ * Auteur : Martial Zinsou
+ */
 import type { FastifyInstance } from 'fastify';
 import type Database from 'better-sqlite3';
 import type { User } from '@roverit/shared';

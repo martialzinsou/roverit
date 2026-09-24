@@ -1,3 +1,8 @@
+/**
+ * Routes de gestion du catalogue de pièces détachées :
+ * CRUD des pièces, contrôle de compatibilité et gestion des stocks atelier.
+ * Auteur : Martial Zinsou
+ */
 import type { FastifyInstance } from 'fastify';
 import type Database from 'better-sqlite3';
 import { newId, type Machine, type Part } from '@roverit/shared';

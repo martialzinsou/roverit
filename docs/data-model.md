@@ -1,5 +1,7 @@
 # RoverIt — Modèle de données
 
+> **Auteur : Martial Zinsou**
+
 Schéma de la base **SQLite** du serveur (identique dans son esprit à la base locale desktop pour les machines hors-ligne). Conçu pour rester migrable vers **PostgreSQL**.
 
 ## 1. Diagramme entité-association (UML ER)
@@ -175,3 +177,89 @@ erDiagram
 - Écrit par `commands.rs::save_local_machine` au moment de la création hors-ligne.
 - Synchronisé vers le serveur via `POST /api/v1/sync` (upsert) au retour du réseau.
 - Le champ `hardware_json` conserve le profil matériel complet détecté.
+
+## 6. Modèle relationnel ITIL DSI
+
+```mermaid
+erDiagram
+    configuration_items ||--o{ ci_relations : "source"
+    configuration_items ||--o{ ci_relations : "cible"
+    configuration_items ||--o{ incidents : "impacté"
+
+    incidents ||--o{ incident_timeline : "historique"
+    change_requests ||--o{ change_cab_votes : "vote"
+    problems ||--o{ kedb_articles : "documente"
+    service_catalog_items ||--o{ service_requests : "commande"
+
+    configuration_items {
+        text id PK
+        text name
+        text type "server | network | database | application | workstation"
+        text status "en_service | en_maintenance | en_stock | commande"
+        text criticality "vitale | critique | importante | standard"
+        text site
+        text ip_address
+        text owner
+    }
+
+    incidents {
+        text id PK
+        text number UK "INC-YYYY-XXX"
+        text title
+        text impact "critique | eleve | moyen | faible"
+        text urgency "critique | haute | moyenne | faible"
+        text priority "P1 | P2 | P3 | P4"
+        text status "nouveau | qualifie | en_cours | en_attente | resolu | clos"
+        text ci_id FK
+        int sla_resolution_hours
+        int sla_breached
+    }
+
+    change_requests {
+        text id PK
+        text number UK "RFC-YYYY-XXX"
+        text title
+        text change_type "standard | normal | urgent"
+        text status "soumis | analyse_impact | en_attente_cab | approuve | applique"
+        text risk_level "faible | modere | eleve | critique"
+        text reason
+        text rollback_plan
+    }
+
+    problems {
+        text id PK
+        text number UK "PRB-YYYY-XXX"
+        text title
+        text status "identifie | analyse_en_cours | erreur_connue | solution_trouvee | clos"
+        text root_cause
+        text workaround
+        text solution
+    }
+
+    kedb_articles {
+        text id PK
+        text number UK "KB-YYYY-XXX"
+        text problem_id FK
+        text title
+        text symptoms
+        text root_cause
+        text workaround
+        text permanent_fix
+        int views_count
+    }
+
+    service_requests {
+        text id PK
+        text number UK "SR-YYYY-XXX"
+        text item_id FK
+        text requester
+        text beneficiary
+        text department
+        text status "soumise | approuvee | en_traitement | livree | rejetee"
+        text due_date
+    }
+```
+
+---
+
+> Modélisation des données conçue par **Martial Zinsou**.

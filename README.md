@@ -1,6 +1,8 @@
 # RoverIt — Workstation OS Hub
 
-Application hybride de **gestion technique de matériel, reconditionnement et supervision d'infrastructures** (nom de code : **Workstation OS Hub**).
+> **Auteur du projet : Martial Zinsou**
+
+Application hybride de **gestion technique de matériel, reconditionnement de stations de travail et gouvernance de DSI** (nom de code : **Workstation OS Hub · DSI ITIL v4**). Intègre nativement la gestion d'atelier (diagnostic, benchmark thermique, ordres de travail, catalogue de pièces, rapports PDF) et la suite complète de gouvernance DSI ITIL (Gestion des Incidents P1..P4 & SLA, CMDB & Cartographie de dépendances, Gestion des Changements & CAB, Problèmes & KEDB, Catalogue de services informatiques).
 
 ![Tableau de bord — aperçu](docs/screenshots/02-dashboard.png)
 
@@ -21,10 +23,12 @@ flowchart LR
 
 | Document | Contenu |
 | --- | --- |
+| [Wiki Officiel du Projet](docs/wiki/Home.md) | Base de connaissances complète en 7 chapitres (Architecture, Atelier, Benchmark, ITIL, Offline, Sécurité, Déploiement). |
+| [Gouvernance DSI & ITIL v4](docs/itil-dsi.md) | Pratiques ITIL v4 (Incidents, CMDB/CIs, Changements/CAB, Problèmes/KEDB, Services). |
 | [Cahier des spécifications (SFD)](docs/sfd.md) | Exigences fonctionnelles & techniques complètes. |
 | [Architecture & diagrammes UML](docs/architecture.md) | Composants, déploiement, séquences, états, cas d'utilisation (Mermaid). |
-| [Modèle de données](docs/data-model.md) | Schéma entité-association, tables, statuts, modèle hors-ligne. |
-| [Référence API](docs/api.md) | Routes REST + événements WebSocket. |
+| [Modèle de données](docs/data-model.md) | Schéma entité-association, tables, statuts, modèle hors-ligne et CMDB. |
+| [Référence API](docs/api.md) | Routes REST + événements WebSocket (Atelier & DSI ITIL). |
 | [Guide d'utilisation illustré](docs/usage-guide.md) | Parcours pas à pas avec captures d'écran (`docs/screenshots/`). |
 
 ## Architecture
@@ -103,3 +107,7 @@ npm test
 - Communications TLS 1.3 (reverse proxy de production recommandé : Caddy/Nginx)
 - JWT signé (HS256) avec expiration + RBAC (Technicien / Admin / Consultant)
 - Mode hors-ligne : SQLite locale sur le desktop + file de synchronisation (outbox) côté web, réplication automatique au retour réseau.
+
+## Auteur & Conception
+- **Auteur : Martial Zinsou**
+- Projet : RoverIt — Workstation OS Hub & Gestion de DSI (ITIL v4)

@@ -1,3 +1,8 @@
+/**
+ * Routes de synchronisation hors-ligne : poussée (upsert machines/OT)
+ * et récupération incrémentale des modifications depuis une date.
+ * Auteur : Martial Zinsou
+ */
 import type { FastifyInstance } from 'fastify';
 import type Database from 'better-sqlite3';
 import { newId, nowIso, type Machine, type SyncPayload, type WorkOrder } from '@roverit/shared';

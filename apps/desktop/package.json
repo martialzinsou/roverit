@@ -2,6 +2,7 @@
   "name": "@roverit/desktop",
   "version": "0.1.0",
   "private": true,
+  "author": "Martial Zinsou",
   "description": "Application de bureau RoverIt (Workstation OS Hub) : enveloppe Tauri du frontend web, inventaire matériel, benchmark et gestion des machines locales.",
   "scripts": {
     "tauri": "tauri",

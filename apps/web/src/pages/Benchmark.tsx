@@ -1,6 +1,8 @@
 /**
  * Benchmark & supervision thermique : lancement de stress tests (local ou
  * serveur), monitoring temps réel et historique des runs.
+ * Thème Apple iMac (Performances & Stabilité).
+ * Auteur : Martial Zinsou
  */
 import { useEffect, useMemo, useState } from 'react';
 import {
@@ -130,11 +132,14 @@ export default function Benchmark() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink-100">Benchmark & supervision thermique</h1>
-        <p className="text-sm text-ink-400">
-          Séquenceur de stress test, score de stabilité et monitoring temps réel.
+        <h1 className="text-3xl font-extrabold tracking-tight text-white">
+          Performances. <span className="imac-gradient-text">Stabilité & Thermique.</span>
+        </h1>
+        <p className="mt-1 text-sm text-ink-400">
+          Séquenceur de stress test, télémétrie en temps réel et dissipation thermique.
           {desktop ? ' Le desktop exécute les charges réelles sur le processeur local.' : ' Mode démo serveur (desktop requis pour le matériel).'}
         </p>
+        <div className="mt-1 text-xs text-brand-400 font-medium">Auteur : Martial Zinsou</div>
       </div>
 
       {desktop && stats ? (

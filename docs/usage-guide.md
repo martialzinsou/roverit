@@ -1,5 +1,7 @@
 # RoverIt — Guide d'utilisation illustré
 
+> **Auteur : Martial Zinsou**
+
 Guide pas à pas des fonctionnalités de **RoverIt (Workstation OS Hub)**, illustré de captures d'écran de l'interface (comptes démo seedés au démarrage du serveur).
 
 > Accès de démonstration : `admin/admin` (admin) · `tech/tech` (technicien) · `client/client` (consultant).
@@ -154,3 +156,7 @@ sequenceDiagram
 | Catalogue de pièces (écriture) | ❌ | ✅ | ❌ |
 | Utilisateurs & réglages | ❌ | ✅ | ❌ |
 | Suppression de machine | ❌ | ✅ | ❌ |
+
+---
+
+> Guide rédigé et documenté par **Martial Zinsou**, Auteur de RoverIt.

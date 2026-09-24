@@ -1,3 +1,8 @@
+/**
+ * Routes de benchmark et supervision thermique :
+ * déclenchement de runs de test, simulation de stress test et historique.
+ * Auteur : Martial Zinsou
+ */
 import type { FastifyInstance } from 'fastify';
 import type Database from 'better-sqlite3';
 import {

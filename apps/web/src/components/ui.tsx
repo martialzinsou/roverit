@@ -1,12 +1,25 @@
 /**
  * Bibliothèque de composants UI réutilisables (formulaires, badges, modales…).
  * Composants génériques stylés avec Tailwind, sans logique métier.
+ * Auteur : Martial Zinsou
  */
 import type { ReactNode, ButtonHTMLAttributes, InputHTMLAttributes, SelectHTMLAttributes } from 'react';
 
-/** Conteneur de carte avec style unifié et className optionnel. */
-export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <div className={`card ${className}`}>{children}</div>;
+/** Conteneur de carte avec style unifié, className et clic optionnels. */
+export function Card({
+  children,
+  className = '',
+  onClick,
+}: {
+  children: ReactNode;
+  className?: string;
+  onClick?: () => void;
+}) {
+  return (
+    <div className={`card ${className}`} onClick={onClick}>
+      {children}
+    </div>
+  );
 }
 
 /** Bouton générique avec variantes de style primary/secondary/danger. */
@@ -58,26 +71,27 @@ export function Field({
   );
 }
 
-/** Étiquette colorée selon un ton prédéfini (neutral, amber, green, red…). */
+/** Étiquette colorée selon un ton prédéfini (style Apple pill). */
 export function Badge({ children, tone = 'neutral' }: { children: ReactNode; tone?: string }) {
   const tones: Record<string, string> = {
-    neutral: 'bg-ink-800 text-ink-200 border-ink-700',
-    amber: 'bg-brand-900/40 text-brand-300 border-brand-700',
-    green: 'bg-emerald-900/40 text-emerald-300 border-emerald-700',
-    red: 'bg-red-900/40 text-red-300 border-red-700',
-    blue: 'bg-sky-900/40 text-sky-300 border-sky-700',
-    gray: 'bg-ink-800 text-ink-400 border-ink-700',
+    neutral: 'bg-white/[0.08] text-ink-200 border-white/[0.12]',
+    amber: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+    green: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+    red: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+    blue: 'bg-sky-500/15 text-sky-300 border-sky-500/30',
+    purple: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
+    gray: 'bg-white/[0.06] text-ink-400 border-white/[0.1]',
   };
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium ${tones[tone] ?? tones.neutral}`}
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-0.5 text-xs font-medium backdrop-blur-md ${tones[tone] ?? tones.neutral}`}
     >
       {children}
     </span>
   );
 }
 
-/** Fenêtre modale centrée avec fond sombre ; se ferme sur clic extérieur. */
+/** Fenêtre modale centrée (Feuille macOS en verre dépoli). */
 export function Modal({
   open,
   onClose,
@@ -91,14 +105,18 @@ export function Modal({
 }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md" onClick={onClose}>
       <div
-        className="max-h-[90vh] w-full max-w-lg overflow-auto rounded-xl border border-ink-700 bg-ink-900 p-5 shadow-xl"
+        className="max-h-[90vh] w-full max-w-lg overflow-auto rounded-3xl border border-white/[0.14] bg-[#1c1c1e]/95 p-6 shadow-2xl backdrop-blur-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-bold text-ink-100">{title}</h3>
-          <button className="text-ink-400 hover:text-ink-100" onClick={onClose} aria-label="Fermer">
+        <div className="mb-5 flex items-center justify-between border-b border-white/[0.08] pb-3">
+          <h3 className="text-lg font-bold text-white tracking-tight">{title}</h3>
+          <button
+            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/[0.08] text-xs text-ink-300 hover:bg-white/[0.15] hover:text-white transition"
+            onClick={onClose}
+            aria-label="Fermer"
+          >
             ✕
           </button>
         </div>
@@ -108,26 +126,26 @@ export function Modal({
   );
 }
 
-/** Indicateur de chargement avec libellé optionnel. */
+/** Indicateur de chargement Apple. */
 export function Spinner({ label = 'Chargement…' }: { label?: string }) {
   return (
     <div className="flex items-center justify-center gap-3 py-12 text-ink-400">
-      <div className="h-5 w-5 animate-spin rounded-full border-2 border-brand-500 border-t-transparent" />
-      <span className="text-sm">{label}</span>
+      <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#0071e3] border-t-transparent" />
+      <span className="text-sm font-medium">{label}</span>
     </div>
   );
 }
 
-/** Message d'état vide centré, dans un encadré en pointillés. */
+/** Message d'état vide centré style Apple. */
 export function EmptyState({ message }: { message: string }) {
   return (
-    <div className="rounded-xl border border-dashed border-ink-700 py-12 text-center text-ink-500">
+    <div className="rounded-2xl border border-dashed border-white/[0.12] bg-white/[0.02] py-14 text-center text-ink-400 font-medium">
       {message}
     </div>
   );
 }
 
-/** Tuile statistique : libellé, valeur, sous-texte et couleur d'accent. */
+/** Tuile statistique : grand chiffre Apple, label uppercase et accent de couleur. */
 export function StatTile({
   label,
   value,
@@ -140,10 +158,10 @@ export function StatTile({
   accent?: string;
 }) {
   return (
-    <Card className="flex flex-col gap-1">
-      <span className="text-xs font-semibold uppercase tracking-wider text-ink-400">{label}</span>
-      <span className={`text-2xl font-bold ${accent ?? 'text-ink-100'}`}>{value}</span>
-      {sub ? <span className="text-xs text-ink-500">{sub}</span> : null}
+    <Card className="flex flex-col gap-1.5 hover:border-white/[0.2] transition">
+      <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-400">{label}</span>
+      <span className={`text-3xl font-extrabold tracking-tight ${accent ?? 'text-white'}`}>{value}</span>
+      {sub ? <span className="text-xs text-ink-400/90">{sub}</span> : null}
     </Card>
   );
 }

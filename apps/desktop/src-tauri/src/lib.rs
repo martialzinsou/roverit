@@ -1,6 +1,7 @@
 //! Bibliothèque principale du binaire Tauri de RoverIt (desktop).
 //! Initialise le backend Tauri, le store SQLite local et enregistre
 //! les commandes natives exposées au frontend web.
+//! Auteur : Martial Zinsou.
 
 mod commands;
 mod store;

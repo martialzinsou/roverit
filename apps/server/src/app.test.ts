@@ -5,7 +5,9 @@ import { buildApp } from './app.js';
 /**
  * Tests d'intégration de l'API : boot de l'application sur une base
  * mémoire puis exécution séquentielle des scénarios métier (auth, RBAC,
- * machines, OT, pièces, benchmarks, sync, WebSocket).
+ * machines, OT, pièces, benchmarks, sync, WebSocket ainsi que
+ * les processus ITIL DSI : Incidents, CMDB, Changements, KEDB, Catalogue).
+ * Auteur : Martial Zinsou
  */
 let app: FastifyInstance;
 let adminToken = '';
@@ -253,6 +255,162 @@ test('WS health et hello', async () => {
   const health = await app.inject({ method: 'GET', url: '/health' });
   assert.equal(health.statusCode, 200);
   assert.equal(health.json().ok, true);
+});
+
+test('ITIL DSI : Dashboard KPIs & métriques SLA', async () => {
+  const res = await app.inject({
+    method: 'GET',
+    url: '/api/v1/itil/dashboard',
+    headers: auth(techToken),
+  });
+  assert.equal(res.statusCode, 200);
+  const kpis = res.json();
+  assert.ok(typeof kpis.activeIncidents === 'number');
+  assert.ok(typeof kpis.slaComplianceRate === 'number');
+  assert.ok(kpis.totalCis >= 7);
+  assert.ok(kpis.activeProblems >= 1);
+});
+
+test('ITIL DSI : CMDB CIs et gestion des dépendances', async () => {
+  // Liste des CIs
+  const list = await app.inject({
+    method: 'GET',
+    url: '/api/v1/itil/cmdb/cis',
+    headers: auth(techToken),
+  });
+  assert.equal(list.statusCode, 200);
+  const cis = list.json() as { id: string; name: string }[];
+  assert.ok(cis.length >= 7);
+
+  // Création CI
+  const created = await app.inject({
+    method: 'POST',
+    url: '/api/v1/itil/cmdb/cis',
+    headers: auth(adminToken),
+    payload: {
+      name: 'Serveur Sauvegarde Veeam',
+      type: 'server',
+      model: 'HPE ProLiant DL380 Gen10',
+      criticality: 'critique',
+      status: 'en_service',
+      site: 'Datacenter Baie C',
+      ip_address: '10.0.10.80',
+    },
+  });
+  assert.equal(created.statusCode, 201);
+  const newCi = created.json();
+  assert.ok(newCi.id);
+
+  // Relation CMDB
+  const rel = await app.inject({
+    method: 'POST',
+    url: '/api/v1/itil/cmdb/relations',
+    headers: auth(techToken),
+    payload: {
+      source_ci_id: newCi.id,
+      target_ci_id: 'ci_sw_core',
+      relation_type: 'connecte_a',
+      notes: 'Liaison 10G vers Switch Cœur',
+    },
+  });
+  assert.equal(rel.statusCode, 200);
+});
+
+test('ITIL DSI : Cycle de vie Incident P1..P4 et SLA', async () => {
+  // Déclaration incident
+  const created = await app.inject({
+    method: 'POST',
+    url: '/api/v1/itil/incidents',
+    headers: auth(clientToken),
+    payload: {
+      title: 'Coupure réseau complète sur le site secondaire',
+      description: 'Liaison fibre noire indisponible depuis 10h15.',
+      impact: 'critique',
+      urgency: 'critique',
+      reporter: 'Responsable Site Sud',
+    },
+  });
+  assert.equal(created.statusCode, 201);
+  const inc = created.json();
+  assert.ok(inc.number.startsWith('INC-'));
+  assert.equal(inc.priority, 'P1');
+  assert.equal(inc.sla_resolution_hours, 2);
+
+  // Mise à jour : résolution
+  const updated = await app.inject({
+    method: 'PATCH',
+    url: `/api/v1/itil/incidents/${inc.id}`,
+    headers: auth(techToken),
+    payload: {
+      status: 'resolu',
+      workaround: 'Bascule automatique 4G secours',
+      resolution: 'Réparation jarretière optique par l\'opérateur',
+    },
+  });
+  assert.equal(updated.statusCode, 200);
+  assert.equal(updated.json().status, 'resolu');
+  assert.ok(updated.json().resolved_at);
+});
+
+test('ITIL DSI : Gestion des Changements & vote CAB', async () => {
+  // Création RFC
+  const rfc = await app.inject({
+    method: 'POST',
+    url: '/api/v1/itil/changes',
+    headers: auth(techToken),
+    payload: {
+      title: 'Mise en place cloisonnement VLAN DMZ',
+      description: 'Isolation stricte des services exposés sur le pare-feu Fortinet.',
+      change_type: 'normal',
+      risk_level: 'modere',
+      reason: 'Audit de conformité ISO 27001.',
+      rollback_plan: 'Rechargement de la sauvegarde de configuration FortiOS v1.12',
+    },
+  });
+  assert.equal(rfc.statusCode, 201);
+  const change = rfc.json();
+  assert.ok(change.number.startsWith('RFC-'));
+
+  // Vote CAB
+  const vote = await app.inject({
+    method: 'POST',
+    url: `/api/v1/itil/changes/${change.id}/cab-vote`,
+    headers: auth(adminToken),
+    payload: {
+      decision: 'pour',
+      comment: 'Revue d\'architecture approuvée sans réserve.',
+    },
+  });
+  assert.equal(vote.statusCode, 200);
+  assert.equal(vote.json().decision, 'pour');
+});
+
+test('ITIL DSI : Problèmes, recherche KEDB et Catalogue de services', async () => {
+  // Consultation KEDB
+  const kedb = await app.inject({
+    method: 'GET',
+    url: '/api/v1/itil/kedb?q=VPN',
+    headers: auth(clientToken),
+  });
+  assert.equal(kedb.statusCode, 200);
+  const articles = kedb.json();
+  assert.ok(articles.length >= 1);
+
+  // Demande de service
+  const req = await app.inject({
+    method: 'POST',
+    url: '/api/v1/itil/services/requests',
+    headers: auth(clientToken),
+    payload: {
+      item_id: 'sc_acc_erp',
+      beneficiary: 'Alice Martin',
+      department: 'Comptabilité',
+      details: 'Création profil comptable tiers et validation achats.',
+      priority: 'normale',
+    },
+  });
+  assert.equal(req.statusCode, 201);
+  assert.ok(req.json().number.startsWith('SR-'));
 });
 
 /**

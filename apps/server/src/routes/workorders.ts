@@ -1,3 +1,8 @@
+/**
+ * Routes de gestion des ordres de travail et interventions atelier :
+ * suivi des étapes de reconditionnement, checklists et clôture d'OT.
+ * Auteur : Martial Zinsou
+ */
 import type { FastifyInstance } from 'fastify';
 import type Database from 'better-sqlite3';
 import { newId, nowIso, type ChecklistItem, type Intervention, type WorkOrder } from '@roverit/shared';
