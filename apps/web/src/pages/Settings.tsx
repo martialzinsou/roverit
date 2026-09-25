@@ -1,4 +1,8 @@
 /**
+ * RoverIt — Settings.tsx
+ * Auteur : Martial Zinsou
+ */
+/**
  * Réglages & utilisateurs (réservé admin) : liste des comptes
  * et des rôles RBAC de l'application.
  */

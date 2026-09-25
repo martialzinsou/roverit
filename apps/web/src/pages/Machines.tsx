@@ -1,4 +1,8 @@
 /**
+ * RoverIt — Machines.tsx
+ * Auteur : Martial Zinsou
+ */
+/**
  * Page d'inventaire (CMDB) : liste filtrable des machines, création via
  * modal et détection matérielle locale en mode desktop.
  */

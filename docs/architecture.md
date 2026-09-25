@@ -1,8 +1,9 @@
 # RoverIt — Architecture technique & diagrammes UML
 
-> **Auteur : Martial Zinsou**
+> **Auteur : Martial Zinsou**  
+> **Thème : Liquid Glass révolutionnaire — Apple Liquid Glass + Google Material 3 Expressive**
 
-Ce document décrit l'architecture de l'application **RoverIt (Workstation OS Hub)** et ses principaux flux, illustrés par des **diagrammes UML (Mermaid)** rendus directement sur GitHub.
+Ce document décrit l'architecture de l'application **RoverIt (Workstation OS Hub)** et ses principaux flux, illustrés par des **diagrammes UML (Mermaid)** rendus directement sur GitHub. L'interface **Liquid Glass** apporte verre liquide `backdrop-blur 40px`, réfraction et halos iridescents.
 
 ## 1. Vue d'ensemble des briques
 

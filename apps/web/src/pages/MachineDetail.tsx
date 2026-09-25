@@ -1,4 +1,8 @@
 /**
+ * RoverIt — MachineDetail.tsx
+ * Auteur : Martial Zinsou
+ */
+/**
  * Page de détail d'une machine : caractéristiques, benchmarks thermiques,
  * composants et ordres de travail associés.
  */

@@ -1,4 +1,8 @@
 /**
+ * RoverIt — Reports.tsx
+ * Auteur : Martial Zinsou
+ */
+/**
  * Rapports & export : KPIs de valorisation, export PDF de fiches techniques
  * et liste des machines prêtes au déploiement.
  */

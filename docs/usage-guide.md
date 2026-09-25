@@ -1,8 +1,9 @@
 # RoverIt — Guide d'utilisation illustré
 
-> **Auteur : Martial Zinsou**
+> **Auteur : Martial Zinsou**  
+> **Thème : Liquid Glass révolutionnaire — captures Liquid Glass 16 vues**
 
-Guide pas à pas des fonctionnalités de **RoverIt (Workstation OS Hub)**, illustré de captures d'écran de l'interface (comptes démo seedés au démarrage du serveur).
+Guide pas à pas des fonctionnalités de **RoverIt (Workstation OS Hub)**, illustré de captures d'écran **Liquid Glass** (Apple + Google) de l'interface (comptes démo seedés au démarrage du serveur).
 
 > Accès de démonstration : `admin/admin` (admin) · `tech/tech` (technicien) · `client/client` (consultant).
 

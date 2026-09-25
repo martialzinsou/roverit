@@ -1,4 +1,8 @@
 /**
+ * RoverIt — format.ts
+ * Auteur : Martial Zinsou
+ */
+/**
  * Fonctions utilitaires de formatage et d'affichage (dates, montants,
  * pourcentages, couleurs) communes à toutes les pages.
  */

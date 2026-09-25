@@ -1,4 +1,8 @@
 /**
+ * RoverIt — desktop.ts
+ * Auteur : Martial Zinsou
+ */
+/**
  * Pont vers le backend natif Tauri (mode desktop).
  * Fournit le profil matériel, les statistiques temps réel, la santé de la
  * batterie et l'exécution de stress tests sur la machine locale.

@@ -1,4 +1,8 @@
 /**
+ * RoverIt — hooks.ts
+ * Auteur : Martial Zinsou
+ */
+/**
  * Hooks React partagés du front web.
  * Gestion du temps réel (WebSocket + rafraîchissement), de la visibilité
  * en ligne/hors-ligne et du chargement des données métier (machines, OT,

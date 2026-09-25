@@ -1,8 +1,8 @@
 # RoverIt — Cahier de spécifications fonctionnelles et techniques (SFD)
 
 > **Auteur : Martial Zinsou**  
-> Nom de code : **Workstation OS Hub**  
-> Version : 0.1.0 — Document de référence des exigences de l'application RoverIt.
+> Nom de code : **Workstation OS Hub · Liquid Glass**  
+> Version : 0.3 — Liquid Glass révolutionnaire (Apple + Google)
 
 ---
 
@@ -38,7 +38,7 @@ L'authentification repose sur **JWT (HS256)** ; chaque requête d'écriture vér
 | Couche | Choix | Rôle |
 | --- | --- | --- |
 | Desktop framework | **Tauri 2 (Rust)** | Conteneur natif + commandes matériel (`commands.rs`) et base locale (`store.rs`). |
-| Frontend / UI | **React + TypeScript + TailwindCSS** | Interface unique partagée desktop & web (PWA), `apps/web`. |
+| Frontend / UI | **React + TypeScript + TailwindCSS — Liquid Glass** | Interface révolutionnaire **Apple Liquid Glass + Google M3 Expressive** : verre liquide `backdrop-blur 40px`, halos iridescents, `rounded-[24px]`, orbes flottants. |
 | Backend API | **Node.js / Fastify (TypeScript)** | REST + WebSocket + génération PDF, `apps/server`. |
 | Base de données | **SQLite** (serveur + locale desktop) | Schéma conçu pour rester compatible avec **PostgreSQL**. |
 | Types partagés | **`@roverit/shared`** | Types métier (Machine, WorkOrder, BenchmarkRun…) consommés par les 3 apps. |
@@ -75,6 +75,7 @@ L'authentification repose sur **JWT (HS256)** ; chaque requête d'écriture vér
 | --- | --- |
 | Démarrage desktop | **< 1,5 s** |
 | Empreinte mémoire desktop | **< 120 Mo** |
+| Interface Liquid Glass | **60 fps**, `backdrop-blur 40px`, verre translucide 8%, halos 5 couleurs, orbes flottants |
 | Mode hors-ligne | Fonctionnel (outbox web + SQLite locale desktop) |
 | Temps de réponse API | < 200 ms en local (requêtes SQL indexées) |
 | Sécurité | TLS 1.3, JWT signé + expiration, RBAC, mots de passe hachés (scrypt) |

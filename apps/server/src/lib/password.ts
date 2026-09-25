@@ -1,3 +1,7 @@
+/**
+ * RoverIt — password.ts
+ * Auteur : Martial Zinsou
+ */
 import {
   randomBytes,
   scryptSync,

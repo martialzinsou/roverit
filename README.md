@@ -4,9 +4,11 @@
 
 Application hybride de **gestion technique de matériel, reconditionnement de stations de travail et gouvernance de DSI** (nom de code : **Workstation OS Hub · DSI ITIL v4**). Intègre nativement la gestion d'atelier (diagnostic, benchmark thermique, ordres de travail, catalogue de pièces, rapports PDF) et la suite complète de gouvernance DSI ITIL (Gestion des Incidents P1..P4 & SLA, CMDB & Cartographie de dépendances, Gestion des Changements & CAB, Problèmes & KEDB, Catalogue de services informatiques).
 
-![Connexion — thème Apple iMac](docs/screenshots/01-login.png)
-![Tableau de bord — aperçu](docs/screenshots/02-dashboard.png)
-![Supervision DSI — ITIL v4](docs/screenshots/11-itil-dashboard.png)
+> **Interface graphique révolutionnaire Liquid Glass** — fusion **Apple Liquid Glass (WWDC25)** + **Google Material 3 Expressive** : verre liquide ultra-translucide avec réfraction, halos iridescents, flou 40px, profondeur multi-couches et orbes flottants.
+
+![Connexion — Liquid Glass](docs/screenshots/01-login.png)
+![Tableau de bord — Liquid Glass](docs/screenshots/02-dashboard.png)
+![Supervision DSI — Liquid Glass](docs/screenshots/11-itil-dashboard.png)
 
 ## Vue d'ensemble
 
@@ -38,7 +40,8 @@ flowchart LR
 | Layer | Technologie |
 | --- | --- |
 | Desktop Framework | **Tauri 2 (Rust + HTML/CSS/JS)** |
-| Frontend / UI | **React + TypeScript + TailwindCSS** (PWA, partagé desktop/web) |
+| Frontend / UI | **React + TypeScript + TailwindCSS** — **Liquid Glass** (Apple WWDC25 + Google M3 Expressive) |
+| Design System | **Liquid Glass** : verre ultra-translucide, `backdrop-blur 40px`, réfraction, halos iridescents, `rounded-[24px]` |
 | Backend / API | **Node.js / TypeScript (Fastify)** — REST + WebSocket |
 | Base de données | **SQLite** (local desktop & serveur) — schéma compatible **PostgreSQL** |
 | Authentification | **JWT + RBAC** (rôles : Technicien, Chef d'atelier/Admin, Consultant/Client) |
@@ -56,8 +59,8 @@ RoverIt/
  └── docs/
      ├── sfd.md              # Cahier de spécifications
      ├── itil-dsi.md         # Gouvernance DSI ITIL v4
-     ├── wiki/               # Wiki officiel (7 chapitres + schémas UML)
-     └── screenshots/        # 16 captures thème Apple iMac
+     ├── wiki/               # Wiki officiel (7 chapitres + schémas UML Mermaid)
+     └── screenshots/        # 16 captures Liquid Glass (Atelier + DSI)
  ```
 
 ## Modules fonctionnels
@@ -68,7 +71,7 @@ RoverIt/
 4. **Reporting & exportation** — fiches techniques PDF, tableau de bord & KPIs.
 5. **Gouvernance DSI ITIL v4** — incidents SLA, CMDB, changements CAB, problèmes KEDB, catalogue de services.
 
-### Galerie de captures (thème Apple iMac)
+### Galerie de captures (Liquid Glass — Apple + Google)
 
 | # | Vue | Capture |
 |---|-----|---------|

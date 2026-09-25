@@ -1,7 +1,7 @@
 /**
- * Layout applicatif principal : Thème Apple iMac (https://www.apple.com/fr/imac/)
- * Barre latérale translucide (verre dépoli macOS), palette des 7 couleurs éclatantes de l'iMac,
- * typographie épurée San Francisco et intégration harmonieuse Atelier + Gouvernance DSI.
+ * Layout applicatif principal : Thème Liquid Glass révolutionnaire
+ * Fusion Apple Liquid Glass (WWDC25) + Google Material 3 Expressive
+ * Sidebar verre liquide ultra-flou, halos iridescents, profondeur multi-couches
  * Auteur : Martial Zinsou
  */
 import type { ReactNode } from 'react';
@@ -11,7 +11,6 @@ import { useOnlineStatus, useWsSync } from '../lib/hooks';
 import { ROLE_LABELS, type Role } from '@roverit/shared';
 import { isDesktop } from '../lib/desktop';
 
-/** Les 7 couleurs éclatantes de l'iMac M4 */
 const IMAC_COLORS = [
   { name: 'Bleu', bg: 'bg-[#0071e3]' },
   { name: 'Mauve', bg: 'bg-[#a855f7]' },
@@ -22,7 +21,6 @@ const IMAC_COLORS = [
   { name: 'Argent', bg: 'bg-[#e5e5ea]' },
 ];
 
-/** Entrées de navigation atelier. */
 const NAV_ATELIER = [
   { to: '/', label: 'Tableau de bord', icon: '▤' },
   { to: '/machines', label: 'Inventaire matériel', icon: '⛁' },
@@ -32,7 +30,6 @@ const NAV_ATELIER = [
   { to: '/reports', label: 'Rapports & export', icon: '⤓' },
 ];
 
-/** Entrées de navigation Gouvernance ITIL & DSI. */
 const NAV_ITIL = [
   { to: '/itil', label: 'Supervision DSI', icon: '📊' },
   { to: '/itil/incidents', label: 'Incidents & SLA', icon: '🚨' },
@@ -42,7 +39,6 @@ const NAV_ITIL = [
   { to: '/itil/services', label: 'Catalogue DSI', icon: '📦' },
 ];
 
-/** Habillage principal des pages authentifiées (sidebar verre dépoli + zone de contenu). */
 export function Layout({ children }: { children: ReactNode }) {
   const { user, logout } = useAuth();
   const { online, pending } = useOnlineStatus();
@@ -50,82 +46,82 @@ export function Layout({ children }: { children: ReactNode }) {
   useWsSync();
 
   return (
-    <div className="flex h-full">
-      {/* Barre latérale macOS / iMac */}
-      <aside className="flex w-64 flex-col border-r border-white/[0.08] bg-black/60 backdrop-blur-2xl">
-        {/* En-tête avec logo RoverIt et les 7 nuances iMac */}
-        <div className="border-b border-white/[0.08] px-5 py-4">
+    <div className="flex h-full relative">
+      {/* Orbes liquides décoratifs en arrière-plan */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="liquid-orb w-[600px] h-[600px] -top-48 -left-32" style={{ background: 'radial-gradient(circle, rgba(0,113,227,0.15), transparent 70%)' }} />
+        <div className="liquid-orb w-[500px] h-[500px] top-1/2 -right-24" style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.12), transparent 70%)' }} />
+        <div className="liquid-orb w-[700px] h-[400px] bottom-0 left-1/3" style={{ background: 'radial-gradient(circle, rgba(244,63,94,0.08), transparent 70%)' }} />
+      </div>
+
+      <aside className="flex w-64 flex-col relative z-10" style={{
+        background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+        backdropFilter: 'blur(40px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+        borderRight: '1px solid rgba(255,255,255,0.08)',
+        boxShadow: '4px 0 32px rgba(0,0,0,0.3), inset -1px 0 0 rgba(255,255,255,0.06)',
+      }}>
+        <div className="px-5 py-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0071e3] to-[#a855f7] text-lg font-black text-white shadow-lg shadow-[#0071e3]/20">
-              R
+            <div className="flex h-11 w-11 items-center justify-center rounded-[16px] text-lg font-black text-white relative overflow-hidden" style={{
+              background: 'linear-gradient(135deg, #0071e3 0%, #a855f7 50%, #f43f5e 100%)',
+              boxShadow: '0 8px 24px rgba(0,113,227,0.4), inset 0 1px 0 rgba(255,255,255,0.3)',
+            }}>
+              <span className="relative z-10">R</span>
+              <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent" />
             </div>
             <div>
-              <div className="text-base font-bold leading-tight tracking-tight text-white">RoverIt</div>
-              <div className="text-[11px] font-medium text-ink-400">Workstation OS Hub</div>
+              <div className="text-[15px] font-bold leading-tight tracking-tight text-white">RoverIt</div>
+              <div className="text-[11px] font-medium text-white/50">Liquid Glass • DSI</div>
             </div>
           </div>
-          {/* Les 7 points de couleur signature iMac */}
-          <div className="mt-3 flex items-center justify-between px-1">
-            <div className="flex items-center gap-1.5">
+          <div className="mt-4 flex items-center justify-between">
+            <div className="flex items-center gap-1">
               {IMAC_COLORS.map((c) => (
-                <span
-                  key={c.name}
-                  title={`iMac en finition ${c.name}`}
-                  className={`h-2 w-2 rounded-full ${c.bg} ring-1 ring-white/20 transition-transform hover:scale-125`}
-                />
+                <span key={c.name} title={c.name} className={`h-2.5 w-2.5 rounded-full ${c.bg} ring-1 ring-white/20 shadow-sm`} />
               ))}
             </div>
-            <span className="text-[9px] font-semibold uppercase tracking-widest text-ink-500">iMac Edition</span>
+            <span className="text-[8px] font-bold uppercase tracking-[0.15em] text-white/30">Liquid</span>
           </div>
         </div>
 
-        <nav className="flex-1 space-y-5 overflow-y-auto p-3">
-          {/* Section Atelier & Reconditionnement */}
+        <nav className="flex-1 space-y-6 overflow-y-auto p-3">
           <div>
-            <div className="px-3 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-ink-400/90">
-              Atelier & Matériel
-            </div>
-            <div className="space-y-0.5">
+            <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-white/40">Atelier & Matériel</div>
+            <div className="space-y-1">
               {NAV_ATELIER.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.to === '/'}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-xl px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
-                      isActive
-                        ? 'bg-white/[0.12] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] font-semibold'
-                        : 'text-ink-400 hover:bg-white/[0.06] hover:text-white'
-                    }`
-                  }
-                >
-                  <span className="w-4 text-center text-sm">{item.icon}</span>
+                <NavLink key={item.to} to={item.to} end={item.to === '/'} className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-[13px] font-medium transition-all duration-300 ${
+                    isActive ? 'text-white' : 'text-white/55 hover:text-white/90'
+                  }`
+                } style={({ isActive }) => isActive ? {
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255,255,255,0.10)',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08)',
+                } : {}}>
+                  <span className="w-5 text-center text-[15px]">{item.icon}</span>
                   {item.label}
                 </NavLink>
               ))}
             </div>
           </div>
 
-          {/* Section Gouvernance DSI / ITIL v4 */}
           <div>
-            <div className="px-3 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#2997ff]">
-              Gouvernance DSI · ITIL v4
-            </div>
-            <div className="space-y-0.5">
+            <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[#2997ff]/80">Gouvernance DSI • ITIL v4</div>
+            <div className="space-y-1">
               {NAV_ITIL.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.to === '/itil'}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-xl px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
-                      isActive
-                        ? 'bg-[#0071e3]/20 text-[#2997ff] border border-[#0071e3]/30 font-semibold shadow-[0_0_15px_rgba(0,113,227,0.25)]'
-                        : 'text-ink-400 hover:bg-white/[0.06] hover:text-white'
-                    }`
-                  }
-                >
-                  <span className="w-4 text-center text-sm">{item.icon}</span>
+                <NavLink key={item.to} to={item.to} end={item.to === '/itil'} className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-[13px] font-medium transition-all duration-300 ${
+                    isActive ? 'text-[#2997ff]' : 'text-white/55 hover:text-white/90'
+                  }`
+                } style={({ isActive }) => isActive ? {
+                  background: 'linear-gradient(135deg, rgba(0,113,227,0.15) 0%, rgba(168,85,247,0.10) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(0,113,227,0.25)',
+                  boxShadow: '0 4px 16px rgba(0,113,227,0.2), 0 0 20px rgba(0,113,227,0.1)',
+                } : {}}>
+                  <span className="w-5 text-center text-[15px]">{item.icon}</span>
                   {item.label}
                 </NavLink>
               ))}
@@ -134,62 +130,47 @@ export function Layout({ children }: { children: ReactNode }) {
 
           {user?.role === 'admin' ? (
             <div>
-              <div className="px-3 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-ink-400/90">
-                Administration
-              </div>
-              <NavLink
-                to="/settings"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 rounded-xl px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
-                    isActive
-                      ? 'bg-white/[0.12] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] font-semibold'
-                      : 'text-ink-400 hover:bg-white/[0.06] hover:text-white'
-                  }`
-                }
-              >
-                <span className="w-4 text-center text-sm">⚿</span>
-                Réglages & utilisateurs
+              <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-white/40">Administration</div>
+              <NavLink to="/settings" className={({ isActive }) =>
+                `flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-[13px] font-medium transition-all duration-300 ${
+                  isActive ? 'text-white' : 'text-white/55 hover:text-white/90'
+                }`
+              } style={({ isActive }) => isActive ? {
+                background: 'rgba(255,255,255,0.10)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255,255,255,0.10)',
+              } : {}}>
+                <span className="w-5 text-center">⚿</span>
+                Réglages
               </NavLink>
             </div>
           ) : null}
         </nav>
 
-        {/* Pied de sidebar Apple */}
-        <div className="border-t border-white/[0.08] px-5 py-3.5 bg-black/30">
+        <div className="p-4 space-y-3" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(0,0,0,0.2)', backdropFilter: 'blur(20px)' }}>
           <div className="flex items-center gap-2">
-            <span className={`h-2 w-2 rounded-full ${online ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]' : 'bg-red-400'}`} />
-            <span className="text-xs text-ink-300 font-medium">
-              {online ? 'Connecté' : pending > 0 ? `Hors-ligne · ${pending} en attente` : 'Hors-ligne'}
-            </span>
+            <span className={`h-2.5 w-2.5 rounded-full ${online ? 'bg-emerald-400' : 'bg-red-400'}`} style={online ? { boxShadow: '0 0 12px rgba(52,211,153,0.6)' } : {}} />
+            <span className="text-xs font-medium text-white/80">{online ? 'Connecté' : pending > 0 ? `${pending} en attente` : 'Hors-ligne'}</span>
           </div>
-          {isDesktop() ? (
-            <div className="mt-1 text-[11px] text-[#2997ff]">● Profil matériel local actif</div>
-          ) : null}
-          <div className="mt-2 text-[10px] text-ink-500">
-            Auteur : <span className="text-ink-300 font-semibold">Martial Zinsou</span>
-          </div>
-          <div className="mt-2.5 flex items-center justify-between gap-2 border-t border-white/[0.08] pt-2.5">
+          {isDesktop() ? <div className="text-[11px] font-medium text-[#2997ff]">● Matériel local</div> : null}
+          <div className="text-[10px] text-white/30">Auteur : <span className="font-semibold text-white/60">Martial Zinsou</span></div>
+          <div className="flex items-center justify-between gap-2 pt-2" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
             <div className="min-w-0">
               <div className="truncate text-xs font-semibold text-white">{user?.username}</div>
-              <div className="truncate text-[10px] text-ink-400">
-                {ROLE_LABELS[(user?.role as Role | undefined) ?? 'consultant']}
-              </div>
+              <div className="truncate text-[10px] text-white/40">{ROLE_LABELS[(user?.role as Role | undefined) ?? 'consultant']}</div>
             </div>
-            <button
-              className="rounded-full border border-white/[0.12] bg-white/[0.08] px-3 py-1 text-xs font-medium text-ink-200 hover:bg-white/[0.15] hover:text-white transition active:scale-95"
-              onClick={() => {
-                void logout();
-                navigate('/login');
-              }}
-            >
+            <button className="rounded-full px-3 py-1 text-xs font-medium text-white/70 hover:text-white transition" style={{
+              background: 'rgba(255,255,255,0.08)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.10)',
+            }} onClick={() => { void logout(); navigate('/login'); }}>
               Quitter
             </button>
           </div>
         </div>
       </aside>
 
-      {/* Contenu principal */}
-      <main className="flex-1 overflow-auto p-8">{children}</main>
+      <main className="flex-1 overflow-auto p-8 relative z-10">{children}</main>
     </div>
   );
 }

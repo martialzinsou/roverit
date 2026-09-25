@@ -1,4 +1,8 @@
 /**
+ * RoverIt — WorkOrderDetail.tsx
+ * Auteur : Martial Zinsou
+ */
+/**
  * Détail d'un ordre de travail : checklist d'intervention, enregistrement
  * d'interventions et changement de statut.
  */

@@ -1,3 +1,7 @@
+/**
+ * RoverIt — events.ts
+ * Auteur : Martial Zinsou
+ */
 import type { WebSocket } from 'ws';
 
 /**

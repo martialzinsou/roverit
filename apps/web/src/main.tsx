@@ -1,4 +1,8 @@
 /**
+ * RoverIt — main.tsx
+ * Auteur : Martial Zinsou
+ */
+/**
  * Point d'entrée du front web RoverIt.
  * Monte l'application React dans le DOM, enregistre le service worker PWA
  * et définit le routeur basé sur le hash (compatible fichier statique).

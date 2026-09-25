@@ -1,4 +1,8 @@
 /**
+ * RoverIt — api.ts
+ * Auteur : Martial Zinsou
+ */
+/**
  * Client API REST du front web RoverIt.
  * Gère l'authentification (localStorage), le cache des réponses GET,
  * la file hors-ligne (« outbox ») et la synchronisation à la reconnexion.

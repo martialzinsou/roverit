@@ -1,4 +1,8 @@
 /**
+ * RoverIt — Parts.tsx
+ * Auteur : Martial Zinsou
+ */
+/**
  * Catalogue de pièces : stocks, prix unitaires, règles de compatibilité
  * et ajustement du stock par l'administrateur.
  */

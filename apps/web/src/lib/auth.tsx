@@ -1,4 +1,8 @@
 /**
+ * RoverIt — auth.tsx
+ * Auteur : Martial Zinsou
+ */
+/**
  * Gestion de l'authentification React (contexte).
  * Fournit l'utilisateur courant, le login/logout, le rafraîchissement de
  * session et le helper de droits d'édition selon le rôle.

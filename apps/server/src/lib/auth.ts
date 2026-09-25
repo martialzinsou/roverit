@@ -1,3 +1,7 @@
+/**
+ * RoverIt — auth.ts
+ * Auteur : Martial Zinsou
+ */
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import type { Role } from '@roverit/shared';
 import jwt from 'jsonwebtoken';

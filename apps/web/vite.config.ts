@@ -1,4 +1,8 @@
 /**
+ * RoverIt — vite.config.ts
+ * Auteur : Martial Zinsou
+ */
+/**
  * Configuration Vite du front web RoverIt.
  * Alias vers le package partagé, proxy API/WebSocket en développement
  * et build statique (base relative).

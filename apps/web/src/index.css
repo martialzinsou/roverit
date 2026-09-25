@@ -1,7 +1,7 @@
 /**
- * Feuille de styles globale : Thème Apple iMac (https://www.apple.com/fr/imac/)
- * Directives Tailwind, fond noir profond avec halos colorés subtils (iMac 7 couleurs),
- * surfaces glassmorphism (verre dépoli), boutons pill et typographie épurée San Francisco.
+ * Feuille de styles globale : Thème Liquid Glass révolutionnaire
+ * Fusion Apple Liquid Glass (WWDC25) + Google Material 3 Expressive
+ * Verre ultra-translucide avec réfraction, halos iridescents, profondeur et flou extrême
  * Auteur : Martial Zinsou
  */
 @tailwind base;
@@ -16,78 +16,179 @@ body,
 
 body {
   @apply bg-black text-ink-100 antialiased selection:bg-brand-500/30 selection:text-white;
-  background-color: #000000;
-  /* Arrière-plan subtilement texturé avec halos lumineux inspirés des 7 couleurs de l'iMac */
-  background-image: 
-    radial-gradient(circle at 15% 10%, rgba(0, 113, 227, 0.08), transparent 35%),
-    radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.06), transparent 40%),
-    radial-gradient(circle at 50% 80%, rgba(244, 63, 94, 0.05), transparent 45%),
-    radial-gradient(circle at 90% 85%, rgba(16, 185, 129, 0.05), transparent 35%);
+  background-color: #050507;
+  background-image:
+    radial-gradient(ellipse 800px 600px at 10% 15%, rgba(0,113,227,0.18), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(168,85,247,0.16), transparent 60%),
+    radial-gradient(ellipse 600px 800px at 85% 85%, rgba(244,63,94,0.12), transparent 60%),
+    radial-gradient(ellipse 900px 400px at 50% 50%, rgba(16,185,129,0.08), transparent 70%),
+    radial-gradient(ellipse 500px 500px at 30% 80%, rgba(249,115,22,0.10), transparent 60%),
+    linear-gradient(180deg, #050507 0%, #0a0a12 50%, #050507 100%);
   background-attachment: fixed;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
   letter-spacing: -0.015em;
 }
 
-/* Scrollbars discrètes style macOS */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 400px 300px at 20% 30%, rgba(255,255,255,0.02), transparent 70%),
+    radial-gradient(ellipse 600px 400px at 80% 70%, rgba(255,255,255,0.015), transparent 70%);
+  z-index: 0;
+}
+
+/* Scrollbars Liquid Glass */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255,255,255,0.04);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255,255,255,0.14);
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: padding-box;
+  backdrop-filter: blur(20px);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(255,255,255,0.22);
 }
 
 @layer components {
-  /* Carte Apple avec verre dépoli (Glassmorphism) */
+  /* Carte Liquid Glass - verre ultra-translucide avec réfraction */
   .card {
-    @apply rounded-2xl border border-white/[0.08] bg-[#161618]/75 backdrop-blur-2xl p-5 shadow-apple-card transition-all duration-300;
+    @apply rounded-[24px] p-5 transition-all duration-500;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow:
+      0 8px 32px rgba(0,0,0,0.4),
+      0 1px 0 rgba(255,255,255,0.08) inset,
+      0 -1px 0 rgba(0,0,0,0.2) inset,
+      0 0 0 1px rgba(255,255,255,0.04) inset;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02) 50%, transparent 80%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
   }
   .card:hover {
-    border-color: rgba(255, 255, 255, 0.14);
+    background: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%);
+    border-color: rgba(255,255,255,0.14);
+    box-shadow:
+      0 16px 48px rgba(0,0,0,0.5),
+      0 1px 0 rgba(255,255,255,0.12) inset,
+      0 0 20px rgba(255,255,255,0.03) inset;
+    transform: translateY(-2px);
   }
 
-  /* Champs de saisie Apple */
+  /* Inputs Liquid Glass */
   .input {
-    @apply w-full rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 py-2.5 text-sm text-white placeholder-ink-400 backdrop-blur-md transition-all duration-200 focus:border-[#2997ff] focus:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-[#2997ff]/25;
+    @apply w-full rounded-2xl px-4 py-3 text-sm text-white placeholder-ink-400 transition-all duration-300 focus:outline-none;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2) inset, 0 1px 0 rgba(255,255,255,0.04) inset;
+  }
+  .input:focus {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(0,113,227,0.5);
+    box-shadow: 0 0 0 3px rgba(0,113,227,0.15), 0 2px 8px rgba(0,0,0,0.2) inset;
+  }
+  .input::placeholder {
+    color: rgba(255,255,255,0.35);
   }
 
-  /* Boutons Pill Apple */
+  /* Boutons Liquid Glass */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-300 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40;
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent 50%);
+    pointer-events: none;
   }
   .btn-primary {
-    @apply btn bg-[#0071e3] text-white hover:bg-[#0077ed] shadow-sm hover:shadow-[0_0_20px_rgba(0,113,227,0.4)];
+    @apply btn text-white;
+    background: linear-gradient(135deg, #0071e3 0%, #0058b6 100%);
+    box-shadow: 0 4px 16px rgba(0,113,227,0.4), 0 1px 0 rgba(255,255,255,0.2) inset;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #0080ff 0%, #0066cc 100%);
+    box-shadow: 0 8px 32px rgba(0,113,227,0.5), 0 1px 0 rgba(255,255,255,0.25) inset;
+    transform: translateY(-1px);
   }
   .btn-secondary {
-    @apply btn border border-white/[0.12] bg-white/[0.08] text-ink-100 hover:bg-white/[0.14] hover:text-white backdrop-blur-md;
+    @apply btn text-white;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.06) inset;
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.18);
+    transform: translateY(-1px);
   }
   .btn-danger {
-    @apply btn bg-[#ff3b30]/90 text-white hover:bg-[#ff3b30] shadow-sm hover:shadow-[0_0_15px_rgba(255,59,48,0.4)];
+    @apply btn text-white;
+    background: linear-gradient(135deg, #ff3b30 0%, #d70015 100%);
+    box-shadow: 0 4px 16px rgba(255,59,48,0.4), 0 1px 0 rgba(255,255,255,0.15) inset;
+    border: 1px solid rgba(255,255,255,0.12);
   }
 
   .th {
-    @apply px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-ink-400 border-b border-white/[0.06];
+    @apply px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-ink-400 border-b;
+    border-color: rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(20px);
   }
   .td {
-    @apply px-4 py-3 text-sm text-ink-200 border-b border-white/[0.04];
+    @apply px-4 py-3 text-sm text-ink-200 border-b;
+    border-color: rgba(255,255,255,0.04);
   }
 
-  /* Titre héroïque style Apple (grand, serré, punchy) */
   .apple-title {
-    @apply text-3xl font-extrabold tracking-tight text-white md:text-4xl;
+    @apply text-4xl font-extrabold tracking-tight text-white md:text-5xl;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
   }
 
-  /* Gradient de texte style Apple Intelligence */
   .imac-gradient-text {
-    @apply bg-gradient-to-r from-[#2997ff] via-[#a855f7] to-[#f43f5e] bg-clip-text text-transparent;
+    background: linear-gradient(135deg, #2997ff 0%, #a855f7 30%, #f43f5e 60%, #f97316 80%, #eab308 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(168,85,247,0.3));
+  }
+
+  .liquid-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.4;
+    pointer-events: none;
   }
 }

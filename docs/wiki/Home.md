@@ -1,9 +1,9 @@
 # Wiki Officiel — RoverIt (Workstation OS Hub & DSI ITIL v4)
 
 > **Auteur : Martial Zinsou**  
-> **Version : 0.2 — Référence complète avec schémas UML & captures**
+> **Version : 0.3 — Liquid Glass révolutionnaire + schémas UML & captures**
 
-Bienvenue sur le Wiki officiel de RoverIt. Base de connaissances couvrant ingénierie, exploitation et gouvernance DSI.
+Bienvenue sur le Wiki officiel de RoverIt. Base de connaissances couvrant ingénierie, exploitation et gouvernance DSI avec **interface Liquid Glass** (Apple WWDC25 + Google M3 Expressive).
 
 ---
 
@@ -19,7 +19,7 @@ Bienvenue sur le Wiki officiel de RoverIt. Base de connaissances couvrant ingén
 
 ---
 
-## 🖼️ Galerie de captures (thème Apple iMac)
+## 🖼️ Galerie de captures (Liquid Glass)
 
 | # | Vue | Fichier |
 | :--- | :--- | :--- |
@@ -42,9 +42,9 @@ Bienvenue sur le Wiki officiel de RoverIt. Base de connaissances couvrant ingén
 
 ---
 
-## 🎨 Thème
+## 🎨 Thème — Liquid Glass révolutionnaire
 
-Interface inspirée **Apple iMac** — verre dépoli, 7 couleurs, San Francisco, fond noir profond.
+Interface **Liquid Glass** : verre liquide ultra-translucide (`backdrop-blur 40px`), réfraction, halos iridescents, profondeur multi-couches, orbes flottants, `rounded-[24px]`, fusion **Apple Liquid Glass + Google Material 3 Expressive**.
 
 ---
 
