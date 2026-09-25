@@ -39,6 +39,16 @@ const NAV_ITIL = [
   { to: '/itil/services', label: 'Catalogue DSI', icon: '📦' },
 ];
 
+const NAV_AIOS = [
+  { to: '/aios', label: 'Tableau de bord IA', icon: '🧠' },
+  { to: '/aios/chat', label: 'Chat IA', icon: '💬' },
+  { to: '/aios/agents', label: 'Agents', icon: '🤖' },
+  { to: '/aios/models', label: 'Modèles', icon: '🧠' },
+  { to: '/aios/workflows', label: 'Workflows', icon: '⚡' },
+  { to: '/aios/analytics', label: 'Analytics', icon: '📊' },
+  { to: '/aios/settings', label: 'Paramètres', icon: '⚙️' },
+];
+
 export function Layout({ children }: { children: ReactNode }) {
   const { user, logout } = useAuth();
   const { online, pending } = useOnlineStatus();
@@ -120,6 +130,27 @@ export function Layout({ children }: { children: ReactNode }) {
                   backdropFilter: 'blur(20px)',
                   border: '1px solid rgba(0,113,227,0.25)',
                   boxShadow: '0 4px 16px rgba(0,113,227,0.2), 0 0 20px rgba(0,113,227,0.1)',
+                } : {}}>
+                  <span className="w-5 text-center text-[15px]">{item.icon}</span>
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[#a855f7]/80">AI Operating System</div>
+            <div className="space-y-1">
+              {NAV_AIOS.map((item) => (
+                <NavLink key={item.to} to={item.to} end={item.to === '/aios'} className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-[13px] font-medium transition-all duration-300 ${
+                    isActive ? 'text-[#a855f7]' : 'text-white/55 hover:text-white/90'
+                  }`
+                } style={({ isActive }) => isActive ? {
+                  background: 'linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(244,63,94,0.10) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(168,85,247,0.25)',
+                  boxShadow: '0 4px 16px rgba(168,85,247,0.2), 0 0 20px rgba(168,85,247,0.1)',
                 } : {}}>
                   <span className="w-5 text-center text-[15px]">{item.icon}</span>
                   {item.label}

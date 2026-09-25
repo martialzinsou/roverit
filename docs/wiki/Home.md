@@ -16,6 +16,7 @@ Bienvenue sur le Wiki officiel de RoverIt. Base de connaissances couvrant ingén
 5. **[05 — Hors-Ligne & Synchronisation](05-Mode-Hors-Ligne-Synchronisation.md)** — Outbox, SQLite locale, idempotence.
 6. **[06 — Sécurité & RBAC](06-Securite-RBAC.md)** — JWT, scrypt, matrice rôles, audit.
 7. **[07 — Déploiement & Exploitation](07-Guide-Deploiement-Operations.md)** — Env, build, prod, reverse proxy.
+8. **[08 — AI Operating System](aios-overview.md)** — Dashboard IA, Chat, Agents, Modèles, Workflows, Analytics, Paramètres.
 
 ---
 
@@ -39,6 +40,13 @@ Bienvenue sur le Wiki officiel de RoverIt. Base de connaissances couvrant ingén
 | 14 | Changements CAB | `screenshots/14-itil-changes.png` |
 | 15 | Problèmes & KEDB | `screenshots/15-itil-problems-kedb.png` |
 | 16 | Catalogue DSI | `screenshots/16-itil-catalogue.png` |
+| 17 | **AIOS Dashboard** | `screenshots/17-aios-dashboard.png` |
+| 18 | **AIOS Chat IA** | `screenshots/18-aios-chat.png` |
+| 19 | **AIOS Agents** | `screenshots/19-aios-agents.png` |
+| 20 | **AIOS Modèles** | `screenshots/20-aios-models.png` |
+| 21 | **AIOS Workflows** | `screenshots/21-aios-workflows.png` |
+| 22 | **AIOS Analytics** | `screenshots/22-aios-analytics.png` |
+| 23 | **AIOS Settings** | `screenshots/22-aios-settings.png` |
 
 ---
 

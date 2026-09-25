@@ -1,7 +1,7 @@
 /**
  * Composant racine de l'application web.
  * Déclare le routeur (React Router) avec les gardes d'authentification et
- * d'accès admin, enveloppant chaque page dans le layout principal (Atelier & DSI ITIL).
+ * d'accès admin, enveloppant chaque page dans le layout principal (Atelier & DSI ITIL & AIOS).
  * Auteur : Martial Zinsou
  */
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
@@ -23,6 +23,13 @@ import ItilCmdb from './pages/itil/ItilCmdb';
 import ItilChanges from './pages/itil/ItilChanges';
 import ItilProblems from './pages/itil/ItilProblems';
 import ItilServiceCatalog from './pages/itil/ItilServiceCatalog';
+import AiosDashboard from './pages/aios/AiosDashboard';
+import AiosChat from './pages/aios/AiosChat';
+import AiosAgents from './pages/aios/AiosAgents';
+import AiosModels from './pages/aios/AiosModels';
+import AiosWorkflows from './pages/aios/AiosWorkflows';
+import AiosAnalytics from './pages/aios/AiosAnalytics';
+import AiosSettings from './pages/aios/AiosSettings';
 
 /** Garde de route : redirige vers /login si aucun utilisateur n'est connecté. */
 function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -194,6 +201,78 @@ export default function App() {
               <Layout>
                 <ItilServiceCatalog />
               </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/aios"
+          element={
+            <RequireAuth>
+              <Layout>
+                <AiosDashboard />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/aios/chat"
+          element={
+            <RequireAuth>
+              <Layout>
+                <AiosChat />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/aios/agents"
+          element={
+            <RequireAuth>
+              <Layout>
+                <AiosAgents />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/aios/models"
+          element={
+            <RequireAuth>
+              <Layout>
+                <AiosModels />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/aios/workflows"
+          element={
+            <RequireAuth>
+              <Layout>
+                <AiosWorkflows />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/aios/analytics"
+          element={
+            <RequireAuth>
+              <Layout>
+                <AiosAnalytics />
+              </Layout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/aios/settings"
+          element={
+            <RequireAuth>
+              <AdminOnly>
+                <Layout>
+                  <AiosSettings />
+                </Layout>
+              </AdminOnly>
             </RequireAuth>
           }
         />

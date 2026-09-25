@@ -56,12 +56,12 @@ RoverIt/
 │   └── server/        # API Fastify (REST + WebSocket, PDF, synchronisation)
 ├── packages/
 │   └── shared/        # Types métier partagés (Machine, WorkOrder, BenchmarkRun, …)
- └── docs/
-     ├── sfd.md              # Cahier de spécifications
-     ├── itil-dsi.md         # Gouvernance DSI ITIL v4
-     ├── wiki/               # Wiki officiel (7 chapitres + schémas UML Mermaid)
-     └── screenshots/        # 16 captures Liquid Glass (Atelier + DSI)
- ```
+└── docs/
+      ├── sfd.md              # Cahier de spécifications
+      ├── itil-dsi.md         # Gouvernance DSI ITIL v4
+      ├── wiki/               # Wiki officiel (7 chapitres + schémas UML Mermaid)
+      └── screenshots/        # 22 captures Liquid Glass (Atelier + DSI + AIOS)
+```
 
 ## Modules fonctionnels
 
@@ -78,12 +78,26 @@ RoverIt/
 | 01 | Connexion | ![01](docs/screenshots/01-login.png) |
 | 02 | Tableau de bord Atelier | ![02](docs/screenshots/02-dashboard.png) |
 | 03 | Inventaire matériel | ![03](docs/screenshots/03-inventaire.png) |
+| 04 | Fiche machine | ![04](docs/screenshots/04-machine-detail.png) |
+| 05 | Catalogue pièces | ![05](docs/screenshots/05-catalogue-pieces.png) |
+| 06 | Benchmark & thermique | ![06](docs/screenshots/06-benchmark.png) |
+| 07 | Ordres de travail | ![07](docs/screenshots/07-ot.png) |
+| 08 | Détail OT | ![08](docs/screenshots/08-ot-detail.png) |
+| 09 | Rapports PDF | ![09](docs/screenshots/09-rapports.png) |
+| 10 | Réglages | ![10](docs/screenshots/10-reglages.png) |
 | 11 | Supervision DSI | ![11](docs/screenshots/11-itil-dashboard.png) |
 | 12 | Incidents & SLA | ![12](docs/screenshots/12-itil-incidents.png) |
 | 13 | CMDB & dépendances | ![13](docs/screenshots/13-itil-cmdb.png) |
 | 14 | Changements & CAB | ![14](docs/screenshots/14-itil-changes.png) |
 | 15 | Problèmes & KEDB | ![15](docs/screenshots/15-itil-problems-kedb.png) |
 | 16 | Catalogue DSI | ![16](docs/screenshots/16-itil-catalogue.png) |
+| 17 | **AIOS Dashboard** | ![17](docs/screenshots/17-aios-dashboard.png) |
+| 18 | **AIOS Chat IA** | ![18](docs/screenshots/18-aios-chat.png) |
+| 19 | **AIOS Agents** | ![19](docs/screenshots/19-aios-agents.png) |
+| 20 | **AIOS Modèles** | ![20](docs/screenshots/20-aios-models.png) |
+| 21 | **AIOS Workflows** | ![21](docs/screenshots/21-aios-workflows.png) |
+| 22 | **AIOS Analytics** | ![22](docs/screenshots/22-aios-analytics.png) |
+| 23 | **AIOS Settings** | ![23](docs/screenshots/22-aios-settings.png) |
 
 ## Démarrage rapide
 
